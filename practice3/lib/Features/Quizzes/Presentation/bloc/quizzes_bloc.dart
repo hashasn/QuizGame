@@ -45,6 +45,7 @@ class QuizzesBloc extends Bloc<QuizzesEvent, QuizzesState> {
       QuizzesButtonClickedEvent event, Emitter<QuizzesState> emit) {
     selectedQuizzes.add(event.selectedQuiz);
     //passQuiz(event.selectedQuiz);
-    emit(StartQuizzesState());
+    // emit(StartQuizzesState());
+    emit(PlayButtonClickedState());
   }
 }

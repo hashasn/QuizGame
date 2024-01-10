@@ -6,21 +6,16 @@ import 'package:footy/Features/PlayQuiz/Presentation/widgets/loadingWidget.dart'
 import 'package:footy/injection_container.dart';
 import 'package:linear_timer/linear_timer.dart';
 
-class NewPage extends StatefulWidget {
-  const NewPage({super.key});
+class QuizStartPage extends StatefulWidget {
+  const QuizStartPage({super.key});
 
   @override
-  State<NewPage> createState() => _NewPageState();
+  State<QuizStartPage> createState() => _QuizStartPageState();
 }
 
-class _NewPageState extends State<NewPage> with TickerProviderStateMixin {
+class _QuizStartPageState extends State<QuizStartPage>
+    with TickerProviderStateMixin {
   late LinearTimerController timerController1 = LinearTimerController(this);
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
 
   @override
   void dispose() {
@@ -99,6 +94,12 @@ class buildBody extends StatelessWidget {
               answeredRight = false;
               answeredWrong = false;
               reset = true;
+            } else if (state is ExitGameState) {
+              Navigator.pop(context, state);
+            } else if (state is RetryGameState) {
+              timerSet('reset', timerController1);
+              count = 0;
+              reset = true;
             }
           },
           builder: (context, state) {
@@ -111,6 +112,7 @@ class buildBody extends StatelessWidget {
               if (reset) timerSet('start', timerController1);
               if (answeredWrong) timerSet('stop', timerController1);
               return QuestionsDisplay(
+                score: state.score,
                 qs: state.qs,
                 count: count,
                 timerController1: timerController1,

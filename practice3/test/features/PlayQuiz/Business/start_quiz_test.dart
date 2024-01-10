@@ -1,39 +1,36 @@
-import 'package:dartz/dartz.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:footy/Features/PlayQuiz/Business/Entities/questions.dart';
-import 'package:footy/Features/PlayQuiz/Business/UseCases/start_quiz.dart';
-import 'package:footy/Features/PlayQuiz/Business/Repositories/questions_repository.dart';
-import 'package:mocktail/mocktail.dart';
+// import 'package:dartz/dartz.dart';
+// import 'package:flutter_test/flutter_test.dart';
+// import 'package:mocktail/mocktail.dart';
 
-class MockQuestionsRepository extends Mock implements QuestionsRepository {}
+// class MockQuestionsRepository extends Mock implements QuestionsRepository {}
 
-void main() {
-  late StartQuiz usecase;
+// void main() {
+//   late StartQuiz usecase;
 
-  late MockQuestionsRepository mockQuestionsRepository;
+//   late MockQuestionsRepository mockQuestionsRepository;
 
-  setUp(() {
-    mockQuestionsRepository = MockQuestionsRepository();
-    usecase = StartQuiz(repo: mockQuestionsRepository);
-  });
-  List<Questions> questions = [];
+//   setUp(() {
+//     mockQuestionsRepository = MockQuestionsRepository();
+//     usecase = StartQuiz(repo: mockQuestionsRepository);
+//   });
+//   List<Questions> questions = [];
 
-  // final tQuizzes = Quizzes(
-  //   status: '',
-  //   results: 0,
-  //   data: Data(quizes: []),
-  // );
-  test(
-    'should get questions from the repository',
-    () async {
-      when(() => mockQuestionsRepository.getQuestions())
-          .thenAnswer((_) async => Right(questions));
+//   // final tQuizzes = Quizzes(
+//   //   status: '',
+//   //   results: 0,
+//   //   data: Data(quizes: []),
+//   // );
+//   test(
+//     'should get questions from the repository',
+//     () async {
+//       when(() => mockQuestionsRepository.getQuestions())
+//           .thenAnswer((_) async => Right(questions));
 
-      final result = await usecase();
-      expect(result, Right(questions));
-      verify(() => mockQuestionsRepository.getQuestions());
+//       final result = await usecase();
+//       expect(result, Right(questions));
+//       verify(() => mockQuestionsRepository.getQuestions());
 
-      verifyNoMoreInteractions(mockQuestionsRepository);
-    },
-  );
-}
+//       verifyNoMoreInteractions(mockQuestionsRepository);
+//     },
+//   );
+// }

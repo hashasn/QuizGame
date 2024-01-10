@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:footy/Features/PlayQuiz/Presentation/Pages/quiz_result_page.dart';
 import 'package:footy/Features/PlayQuiz/Presentation/bloc/play_bloc.dart';
 import 'package:footy/Features/PlayQuiz/Presentation/widgets/OptionsContainerWidget.dart';
 import 'package:footy/Features/Quizzes/Business/Entities/quizzes.dart';
@@ -7,6 +8,7 @@ import 'package:linear_timer/linear_timer.dart';
 
 class QuestionsDisplay extends StatelessWidget {
   final Quize qs;
+  final int score;
   final int count;
   final LinearTimerController timerController1;
   final bool answeredRight;
@@ -18,7 +20,8 @@ class QuestionsDisplay extends StatelessWidget {
       required this.count,
       required this.timerController1,
       required this.answeredRight,
-      required this.answeredWrong});
+      required this.answeredWrong,
+      required this.score});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +30,8 @@ class QuestionsDisplay extends StatelessWidget {
       return QuestionPages(questions[count], context, timerController1,
           answeredRight, answeredWrong);
     }
-    return Center(child: Text('Qioz done'));
+
+    return ResultPage(score: score);
   }
 }
 

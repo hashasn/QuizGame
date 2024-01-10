@@ -18,8 +18,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
+          useMaterial3: true,
           primaryColor: Colors.green[800],
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.green)),
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.green,
+            brightness: Brightness.dark,
+          )),
       home: MyWidget(),
     );
   }

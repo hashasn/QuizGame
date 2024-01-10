@@ -15,14 +15,17 @@ class PlayLoadingState extends PlayState {}
 
 class PlaySuccessState extends PlayState {
   final Quize qs;
+  final int score;
 
-  const PlaySuccessState({required this.qs});
+  const PlaySuccessState({required this.qs, required this.score});
 }
 
 class PlayErrorState extends PlayState {
   final String error;
 
-  const PlayErrorState({required this.error});
+  const PlayErrorState({
+    required this.error,
+  });
 }
 
 class CorrectAnswerStates extends PlayActionState {}
@@ -30,3 +33,13 @@ class CorrectAnswerStates extends PlayActionState {}
 class WrongAnswerStates extends PlayActionState {}
 
 class NextQuestionStates extends PlayActionState {}
+
+class GameDoneState extends PlayActionState {
+  final int score;
+
+  GameDoneState({required this.score});
+}
+
+class ExitGameState extends PlayActionState {}
+
+class RetryGameState extends PlayActionState {}

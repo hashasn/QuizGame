@@ -11,6 +11,7 @@ import 'package:footy/Features/Quizzes/Presentation/bloc/quizzes_bloc.dart';
 
 import 'package:footy/Features/Quizzes/Business/UseCases/get_quizzes.dart';
 import 'package:footy/Features/Quizzes/Business/Repositories/quizzes_repository.dart';
+import 'package:footy/core/Util/score.dart';
 import 'package:http/http.dart' as http;
 import 'package:footy/core/network/network_info.dart';
 
@@ -60,8 +61,11 @@ Future<void> initTwo() async {
   getIt.registerSingleton<SelectedQuizRepo>(
       SelectedQuizRepoImpl(localDataSource: getIt())); //
 
+  //util
+  getIt.registerSingleton(Score());
+
   //blocs
-  getIt.registerFactory(() => PlayBloc(getIt()));
+  getIt.registerFactory(() => PlayBloc(getIt(), getIt()));
 
   //Usecase
   getIt.registerSingleton(startQuiz(repo: getIt()));

@@ -20,8 +20,10 @@ class OptionsContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        BlocProvider.of<PlayBloc>(context)
-            .add(OptionSelectedEvent(option: options, question: q));
+        if (answeredRight == false && answeredWrong == false) {
+          BlocProvider.of<PlayBloc>(context)
+              .add(OptionSelectedEvent(option: options, question: q));
+        }
       },
       child: Container(
         // height: 100,
@@ -47,8 +49,6 @@ class OptionsContainer extends StatelessWidget {
 
 Color borderColor(
     String options, String answer, bool answeredRight, bool answeredWrong) {
-  print('id the anser right $answeredRight');
-  print('is the answer wrong  $answeredWrong');
   if (answeredRight == true) {
     if (options == answer) return Colors.greenAccent;
     return Colors.blueGrey;

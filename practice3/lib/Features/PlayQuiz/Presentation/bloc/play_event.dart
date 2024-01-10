@@ -17,3 +17,9 @@ class OptionSelectedEvent extends PlayEvent {
 }
 
 class TimeOutEvent extends PlayEvent {}
+
+class GameDoneEvent extends PlayEvent {}
+
+class ExitGameEvent extends PlayEvent {}
+
+class RetryGameEvent extends PlayEvent {}

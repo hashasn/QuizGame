@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:footy/Features/PlayQuiz/Presentation/Pages/newPage.dart';
+// import 'package:footy/Features/PlayQuiz/Presentation/Pages/QuizStartPage.dart';
 import 'package:footy/Features/Quizzes/Presentation/bloc/quizzes_bloc.dart';
 import 'package:footy/Features/Quizzes/Business/Entities/quizzes.dart';
 
@@ -17,12 +17,13 @@ class QuizzesTiles extends StatelessWidget {
       child: Material(
         elevation: 12,
         borderRadius: BorderRadius.circular(10),
+        shadowColor: Colors.greenAccent,
         child: Container(
             margin: const EdgeInsets.all(10),
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              //border: Border.all(color: Colors.black),
+              // border: Border.all(color: Colors.greenAccent),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,6 +32,7 @@ class QuizzesTiles extends StatelessWidget {
                   height: 200,
                   width: double.maxFinite,
                   decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
                     image: DecorationImage(
                       fit: BoxFit.cover,
                       image: NetworkImage(quiz[count].image),
@@ -60,12 +62,6 @@ class QuizzesTiles extends StatelessWidget {
                               BlocProvider.of<QuizzesBloc>(context).add(
                                   QuizzesButtonClickedEvent(
                                       selectedQuiz: quiz[count]));
-
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const NewPage()),
-                              );
                             },
                             style: ElevatedButton.styleFrom(
                               // foregroundColor: Colors.white, // background
