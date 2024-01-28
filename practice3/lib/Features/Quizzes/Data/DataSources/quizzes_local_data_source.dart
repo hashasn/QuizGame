@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:footy/Features/Quizzes/Data/models/model_quizzes.dart';
+import 'package:footy/features/Quizzes/Data/models/model_quizzes.dart';
 import 'package:footy/core/error/exceptions.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';

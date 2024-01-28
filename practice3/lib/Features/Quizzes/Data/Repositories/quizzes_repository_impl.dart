@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
-import 'package:footy/Features/Quizzes/Business/Repositories/quizzes_repository.dart';
+import 'package:footy/features/Quizzes/Business/Repositories/quizzes_repository.dart';
 import 'package:footy/core/error/exceptions.dart';
 
 import 'package:footy/core/error/failure.dart';
-import 'package:footy/Features/Quizzes/Business/Entities/quizzes.dart';
-import 'package:footy/Features/Quizzes/Data/DataSources/quizzes_local_data_source.dart';
-import 'package:footy/Features/Quizzes/Data/DataSources/quizzes_remote_data_source.dart';
+import 'package:footy/features/Quizzes/Business/Entities/quizzes.dart';
+import 'package:footy/features/Quizzes/Data/DataSources/quizzes_local_data_source.dart';
+import 'package:footy/features/Quizzes/Data/DataSources/quizzes_remote_data_source.dart';
 
 import 'package:footy/core/network/network_info.dart';
 import 'package:injectable/injectable.dart';

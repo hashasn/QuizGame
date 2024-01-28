@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:footy/Features/PlayQuiz/Presentation/bloc/play_bloc.dart';
+import 'package:footy/features/PlayQuiz/Presentation/bloc/play_bloc.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class ResultPage extends StatelessWidget {

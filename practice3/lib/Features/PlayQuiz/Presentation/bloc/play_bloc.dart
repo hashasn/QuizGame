@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:footy/Features/PlayQuiz/Business/usecase/start_quiz.dart';
-import 'package:footy/Features/PlayQuiz/Data/DataSource/localSelectedQuiz.dart';
-import 'package:footy/Features/Quizzes/Business/Entities/quizzes.dart';
+import 'package:footy/features/PlayQuiz/Business/usecase/start_quiz.dart';
+import 'package:footy/features/PlayQuiz/Data/DataSource/localSelectedQuiz.dart';
+import 'package:footy/features/Quizzes/Business/Entities/quizzes.dart';
 import 'package:footy/core/Util/compareanswer.dart';
 import 'package:footy/core/Util/score.dart';
 

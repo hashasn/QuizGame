@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 
 import 'package:equatable/equatable.dart';
-import 'package:footy/Features/PlayQuiz/Data/DataSource/localSelectedQuiz.dart';
+import 'package:footy/features/PlayQuiz/Data/DataSource/localSelectedQuiz.dart';
 import 'package:footy/core/error/failure.dart';
-import 'package:footy/Features/Quizzes/Business/Entities/quizzes.dart';
-import 'package:footy/Features/Quizzes/Business/UseCases/get_quizzes.dart';
+import 'package:footy/features/Quizzes/Business/Entities/quizzes.dart';
+import 'package:footy/features/Quizzes/Business/UseCases/get_quizzes.dart';
 import 'package:injectable/injectable.dart';
 
 part 'quizzes_event.dart';
@@ -35,7 +35,7 @@ class QuizzesBloc extends Bloc<QuizzesEvent, QuizzesState> {
       case ServerFailure:
         return 'Server failure';
       case CacheFailure:
-        return 'C';
+        return 'Cache failure';
       default:
         return 'Unexpected Error';
     }
@@ -45,7 +45,7 @@ class QuizzesBloc extends Bloc<QuizzesEvent, QuizzesState> {
       QuizzesButtonClickedEvent event, Emitter<QuizzesState> emit) {
     selectedQuizzes.add(event.selectedQuiz);
     //passQuiz(event.selectedQuiz);
-    // emit(StartQuizzesState());
+    emit(StartQuizzesState());
     emit(PlayButtonClickedState());
   }
 }

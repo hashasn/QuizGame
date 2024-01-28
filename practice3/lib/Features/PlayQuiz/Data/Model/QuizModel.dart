@@ -1,4 +1,4 @@
-import 'package:footy/Features/PlayQuiz/Business/Entities/quiz.dart';
+import 'package:footy/features/PlayQuiz/Business/Entities/quiz.dart';
 
 // ignore: must_be_immutable
 // class QuizModel extends Quiz {

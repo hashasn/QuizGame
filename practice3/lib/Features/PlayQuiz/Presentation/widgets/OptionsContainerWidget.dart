@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:footy/Features/PlayQuiz/Presentation/bloc/play_bloc.dart';
-import 'package:footy/Features/Quizzes/Business/Entities/quizzes.dart';
+import 'package:footy/features/PlayQuiz/Presentation/bloc/play_bloc.dart';
+import 'package:footy/features/Quizzes/Business/Entities/quizzes.dart';
 
 class OptionsContainer extends StatelessWidget {
   final String options;

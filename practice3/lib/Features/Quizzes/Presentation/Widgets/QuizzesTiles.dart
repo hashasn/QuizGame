@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:footy/Features/PlayQuiz/Presentation/Pages/QuizStartPage.dart';
-import 'package:footy/Features/Quizzes/Presentation/bloc/quizzes_bloc.dart';
-import 'package:footy/Features/Quizzes/Business/Entities/quizzes.dart';
+import 'package:footy/features/Quizzes/Presentation/bloc/quizzes_bloc.dart';
+import 'package:footy/features/Quizzes/Business/Entities/quizzes.dart';
 
 class QuizzesTiles extends StatelessWidget {
   final List<Quize> quiz;

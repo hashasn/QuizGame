@@ -12,5 +12,5 @@ class QuizzesInitialEvent extends QuizzesEvent {}
 class QuizzesButtonClickedEvent extends QuizzesEvent {
   final Quize selectedQuiz;
 
-  QuizzesButtonClickedEvent({required this.selectedQuiz});
+  const QuizzesButtonClickedEvent({required this.selectedQuiz});
 }

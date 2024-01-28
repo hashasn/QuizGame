@@ -25,6 +25,6 @@ class ErrorState extends QuizzesState {
   const ErrorState({required this.error});
 }
 
-class StartQuizzesState extends QuizzesState {}
+class StartQuizzesState extends QuizzesActionState {}
 
 class PlayButtonClickedState extends QuizzesActionState {}

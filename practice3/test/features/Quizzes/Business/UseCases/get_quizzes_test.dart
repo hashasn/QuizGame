@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:footy/Features/Quizzes/Business/Entities/quizzes.dart';
-import 'package:footy/Features/Quizzes/Business/Repositories/quizzes_repository.dart';
-import 'package:footy/Features/Quizzes/Business/UseCases/get_quizzes.dart';
+import 'package:footy/features/Quizzes/Business/Entities/quizzes.dart';
+import 'package:footy/features/Quizzes/Business/Repositories/quizzes_repository.dart';
+import 'package:footy/features/Quizzes/Business/UseCases/get_quizzes.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockQuizzesRepository extends Mock implements QuizzesRepository {}

@@ -1,4 +1,4 @@
-import 'package:footy/Features/Quizzes/Business/Entities/quizzes.dart';
+import 'package:footy/features/Quizzes/Business/Entities/quizzes.dart';
 
 class QuizzesModel extends Quizzes {
   const QuizzesModel(

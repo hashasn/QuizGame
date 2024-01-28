@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:footy/Features/Quizzes/Presentation/pages/QuizzesPage.dart';
+import 'package:footy/Features/multiplayer/Presentation/pages/menu_page.dart';
 import 'package:footy/injection_container.dart' as di;
 
 void main() async {
@@ -8,6 +8,9 @@ void main() async {
   //configureDependencies();
   await di.init();
   await di.initTwo();
+  di.initThree();
+  di.initFour();
+  // di.initFour();
   runApp(const MyApp());
 }
 
@@ -24,7 +27,7 @@ class MyApp extends StatelessWidget {
             seedColor: Colors.green,
             brightness: Brightness.dark,
           )),
-      home: MyWidget(),
+      home: MenuPage(),
     );
   }
 }

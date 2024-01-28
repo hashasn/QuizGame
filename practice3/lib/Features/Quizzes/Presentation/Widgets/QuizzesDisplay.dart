@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:footy/Features/Quizzes/Presentation/Widgets/QuizzesTiles.dart';
-import 'package:footy/Features/Quizzes/Business/Entities/quizzes.dart';
+import 'package:footy/features/Quizzes/Presentation/Widgets/QuizzesTiles.dart';
+import 'package:footy/features/Quizzes/Business/Entities/quizzes.dart';
 
 class QuizzesDisplay extends StatelessWidget {
   final Quizzes qs;

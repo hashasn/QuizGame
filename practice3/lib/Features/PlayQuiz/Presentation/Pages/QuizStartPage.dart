@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:footy/Features/PlayQuiz/Presentation/bloc/play_bloc.dart';
-import 'package:footy/Features/PlayQuiz/Presentation/widgets/QuestionsDisplay.dart';
-import 'package:footy/Features/PlayQuiz/Presentation/widgets/loadingWidget.dart';
+import 'package:footy/features/PlayQuiz/Presentation/bloc/play_bloc.dart';
+import 'package:footy/features/PlayQuiz/Presentation/widgets/QuestionsDisplay.dart';
+import 'package:footy/features/PlayQuiz/Presentation/widgets/loadingWidget.dart';
 import 'package:footy/injection_container.dart';
 import 'package:linear_timer/linear_timer.dart';
 

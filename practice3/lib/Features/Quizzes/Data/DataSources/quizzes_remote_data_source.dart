@@ -1,9 +1,8 @@
 import 'dart:convert';
 
-import 'package:footy/Features/Quizzes/Data/models/model_quizzes.dart';
+import 'package:footy/features/Quizzes/Data/models/model_quizzes.dart';
 import 'package:footy/core/error/exceptions.dart';
 import 'package:http/http.dart' as http;
-import 'package:injectable/injectable.dart';
 
 abstract class QuizzesRemoteDataSource {
   /// Throws a [ServerException] for all error codes.
@@ -11,9 +10,8 @@ abstract class QuizzesRemoteDataSource {
   Future<QuizzesModel> getQuizzes();
 }
 
-const uri = 'http://127.0.0.1:2000/api/v1';
+const uri = 'http://192.168.0.4:2000/api/v1';
 
-@singleton
 class QuizzesRemoteDataSourceImpl implements QuizzesRemoteDataSource {
   final http.Client client;
   QuizzesRemoteDataSourceImpl({required this.client});
