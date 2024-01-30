@@ -43,4 +43,8 @@ class NewPLayerJoinedActionState extends MultiplayerActionState {}
 
 class LeaveGameActionState extends MultiplayerActionState {}
 
-class StartGameActionState extends MultiplayerActionState {}
+class StartGameActionState extends MultiplayerActionState {
+  final String username;
+
+  StartGameActionState({required this.username});
+}

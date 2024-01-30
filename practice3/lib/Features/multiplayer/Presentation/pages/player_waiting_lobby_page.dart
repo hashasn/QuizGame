@@ -31,6 +31,7 @@ class buildPlayerLobby extends StatelessWidget {
                       // WaitingLobbyPage(name: 'Host', code: code)
                       GamePage(
                         gameCode: code,
+                        userName: state.username,
                       )),
             );
           }

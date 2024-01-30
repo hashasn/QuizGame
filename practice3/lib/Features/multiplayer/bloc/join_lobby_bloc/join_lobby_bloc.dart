@@ -35,7 +35,10 @@ class JoinLobbyBloc extends Bloc<JoinLobbyEvent, JoinLobbyState> {
                 add(JoinLobbyHostLeftGameEvent());
               } else if (type == 'delete') {}
             } else {
-              add(JoinLobbyGameStartEvent());
+              String gameCode = json.decode(event)['fullDocument']['gameCode'];
+              if (gameCode == code) {
+                add(JoinLobbyGameStartEvent());
+              }
             }
             // String id = json.decode(event)['documentKey']['_id'];s
             // String lobbyCode = json.decode(event)['documentKey']['lobbyCode'];
@@ -115,7 +118,7 @@ class JoinLobbyBloc extends Bloc<JoinLobbyEvent, JoinLobbyState> {
 
   FutureOr<void> joinLobbyGameStartEvent(
       JoinLobbyGameStartEvent event, Emitter<JoinLobbyState> emit) {
-    emit(JoinLobbyGameStartActionState());
+    emit(JoinLobbyGameStartActionState(username: userName));
   }
 }
 

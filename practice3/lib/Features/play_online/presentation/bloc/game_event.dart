@@ -9,8 +9,28 @@ abstract class GameEvent extends Equatable {
 
 class GameInitialEvent extends GameEvent {
   final String gameCode;
+  final String username;
 
-  GameInitialEvent({required this.gameCode});
+  GameInitialEvent({
+    required this.gameCode,
+    required this.username,
+  });
 }
 
 class GameNextQuestion extends GameEvent {}
+
+class GameAnswerSelected extends GameEvent {
+  final bool isRight;
+  final int index;
+  final int asnwerIndex;
+
+  GameAnswerSelected({
+    required this.isRight,
+    required this.index,
+    required this.asnwerIndex,
+  });
+}
+
+class GameResultsEvent extends GameEvent {}
+
+class BackToLobbyEvent extends GameEvent {}

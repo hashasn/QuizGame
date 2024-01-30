@@ -41,4 +41,8 @@ class JoinLobbyErrorState extends JoinLobbyState {
 
 class JoinLobbyLeaveGameState extends JoinLobbyActionState {}
 
-class JoinLobbyGameStartActionState extends JoinLobbyActionState {}
+class JoinLobbyGameStartActionState extends JoinLobbyActionState {
+  final String username;
+
+  JoinLobbyGameStartActionState({required this.username});
+}

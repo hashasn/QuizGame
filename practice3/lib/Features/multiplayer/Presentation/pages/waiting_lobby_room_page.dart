@@ -44,7 +44,10 @@ class buildBody extends StatelessWidget {
               MaterialPageRoute(
                   builder: (context) =>
                       // WaitingLobbyPage(name: 'Host', code: code)
-                      GamePage(gameCode: code)),
+                      GamePage(
+                        gameCode: code,
+                        userName: state.username,
+                      )),
             );
           }
         },

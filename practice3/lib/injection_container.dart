@@ -22,10 +22,20 @@ import 'package:footy/features/multiplayer/business/repository/quizzes_repo.dart
 import 'package:footy/features/multiplayer/business/usecase/get_quizzes.dart';
 import 'package:footy/features/multiplayer/data/backend/get_quizzes.dart';
 import 'package:footy/features/multiplayer/data/repository/quizzes_repo_impl.dart';
+import 'package:footy/features/play_online/business/repositories/add_score_repo.dart';
+import 'package:footy/features/play_online/business/repositories/delete_game_repo.dart';
 import 'package:footy/features/play_online/business/repositories/get_quiz_online_repo.dart';
+import 'package:footy/features/play_online/business/repositories/get_score_repo.dart';
+import 'package:footy/features/play_online/business/usecases/add_user_score.dart';
+import 'package:footy/features/play_online/business/usecases/delete_game.dart';
 import 'package:footy/features/play_online/business/usecases/get_quiz_online.dart';
-import 'package:footy/features/play_online/data/backend/get_game_quiz.dart';
+import 'package:footy/features/play_online/business/usecases/get_score.dart';
+import 'package:footy/features/play_online/data/backend/game_data.dart';
+import 'package:footy/features/play_online/data/repository/add_score_repo_impl.dart';
+import 'package:footy/features/play_online/data/repository/delete_game_repo_impl.dart';
 import 'package:footy/features/play_online/data/repository/get_quiz_online_repo_impl.dart';
+import 'package:footy/features/play_online/data/repository/get_score_repo_impl.dart';
+
 import 'package:footy/features/play_online/presentation/bloc/game_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:footy/core/network/network_info.dart';
@@ -34,6 +44,8 @@ import 'package:get_it/get_it.dart';
 
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'features/play_online/presentation/bloc/resultsBloc/results_bloc.dart';
 
 final getIt = GetIt.instance;
 
@@ -107,14 +119,22 @@ void initThree() {
 }
 
 void initFour() {
-  getIt.registerSingleton(FetchQuizForOnline(client: getIt()));
+  getIt.registerSingleton(FetchGameData(client: getIt()));
   //repo
   getIt.registerSingleton<OnlinePlayQuizRepo>(
       OnlinePlayQuizRepoImpl(data: getIt()));
+  getIt.registerSingleton<AddScoreRepo>(AddScoreRepoImpl(data: getIt()));
+  getIt.registerSingleton<GetScoreRepo>(GetScoreRepoImpl(data: getIt()));
+  getIt
+      .registerSingleton<DeleteGameRepo>(DeleteGameRepoImpl(gameData: getIt()));
 
   //blocs
-  getIt.registerFactory(() => GameBloc(getIt()));
+  getIt.registerFactory(() => GameBloc(getIt(), getIt(), getIt(), getIt()));
+  getIt.registerFactory(() => ResultsBloc(getIt()));
 
   //Usecase
   getIt.registerSingleton(OnlinePlayQuiz(repository: getIt()));
+  getIt.registerSingleton(GetScore(repository: getIt()));
+  getIt.registerSingleton(AddScore(repo: getIt()));
+  getIt.registerSingleton(DeleteGame(repo: getIt()));
 }

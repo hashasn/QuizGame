@@ -20,10 +20,19 @@ class GameLoadingState extends GameState {
 class GameSuccessState extends GameState {
   final Quize qs;
   final int count;
+  final bool canAnswer;
+  final List<Color> color;
+  final List<User> users;
 
-  GameSuccessState({required this.qs, required this.count});
+  GameSuccessState({
+    required this.qs,
+    required this.count,
+    required this.canAnswer,
+    required this.color,
+    required this.users,
+  });
 
-  List<Object> get props => [count];
+  List<Object> get props => [count, canAnswer];
 }
 
 class GameErrorState extends GameState {
@@ -31,3 +40,13 @@ class GameErrorState extends GameState {
 
   GameErrorState({required this.error});
 }
+
+class GameNewQuestionState extends GameActionState {}
+
+class GameResultsState extends GameState {
+  final List<User> users;
+
+  GameResultsState({required this.users});
+}
+
+class BackToLobbyActionState extends GameActionState {}

@@ -36,16 +36,24 @@ class MultiplayerBloc extends Bloc<MultiplayerEvent, MultiplayerState> {
 
         if (event != null) {
           if (event is String && event.contains('fullDocument')) {
-            String id = json.decode(event)['fullDocument']['_id'];
-            String lobbyCode = json.decode(event)['fullDocument']['lobbyCode'];
-            if (lobbyCode == code) {
-              final SharedPreferences prefs =
-                  await SharedPreferences.getInstance();
-              prefs.setString('lobbyID', id);
+            //Listen for insert change
+            String coll = json.decode(event)['ns']['coll'];
+            if (coll == 'waitinglobbies') {
+              //if change is in waitinglobbies collection
+              String id = json.decode(event)['fullDocument']['_id'];
+              String lobbyCode =
+                  json.decode(event)['fullDocument']['lobbyCode'];
+              if (lobbyCode == code) {
+                final SharedPreferences prefs =
+                    await SharedPreferences.getInstance();
+                prefs.setString('lobbyID', id);
 
-              add(LobbychangedEvent());
+                add(LobbychangedEvent());
+              }
             }
           } else {
+            //Listen for update change
+
             print('current id is $event');
             final SharedPreferences prefs =
                 await SharedPreferences.getInstance();
@@ -141,9 +149,10 @@ class MultiplayerBloc extends Bloc<MultiplayerEvent, MultiplayerState> {
     CreateGame game =
         CreateGame(quizId: event.id, players: users, gameCode: code);
     print('game id is ${event.id}');
+
     game.AddGame();
     socket.sendMessage('game');
-    emit(StartGameActionState());
+    emit(StartGameActionState(username: userName));
   }
 }
 

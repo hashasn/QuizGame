@@ -3,12 +3,12 @@ import 'package:footy/core/error/failure.dart';
 import 'package:footy/features/multiplayer/data/MOdels/game_model.dart';
 import 'package:footy/features/play_online/business/repositories/get_score_repo.dart';
 
-class getScore {
+class GetScore {
   final GetScoreRepo repository;
 
-  getScore({required this.repository});
+  GetScore({required this.repository});
 
-  Future<Either<Failure, User>> call() {
-    return repository.getScore();
+  Future<Either<Failure, List<User>>> call(String code) {
+    return repository.getScore(code);
   }
 }
