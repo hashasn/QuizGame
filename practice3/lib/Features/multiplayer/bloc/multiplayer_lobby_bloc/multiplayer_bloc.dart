@@ -80,6 +80,7 @@ class MultiplayerBloc extends Bloc<MultiplayerEvent, MultiplayerState> {
 
   FutureOr<void> lobbyInitialEvent(
       LobbyInitialEvent event, Emitter<MultiplayerState> emit) async {
+    print(' am back here');
     emit(LobbyLoadingstate(loadingString: 'joining game.....'));
     await Future.delayed(Duration(seconds: 1));
     name = event.name;

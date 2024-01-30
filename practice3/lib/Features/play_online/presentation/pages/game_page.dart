@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:footy/Features/multiplayer/Presentation/pages/menu_page.dart';
 import 'package:footy/features/PlayQuiz/Presentation/widgets/loadingWidget.dart';
 import 'package:footy/features/Quizzes/Business/Entities/quizzes.dart';
 import 'package:footy/features/play_online/presentation/bloc/game_bloc.dart';
@@ -60,7 +61,10 @@ class buildGameBody extends StatelessWidget {
           buildWhen: (previous, current) => current is! GameActionState,
           listener: (context, state) {
             if (state is BackToLobbyActionState) {
-              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MenuPage()),
+              );
             }
           },
           builder: (context, state) {

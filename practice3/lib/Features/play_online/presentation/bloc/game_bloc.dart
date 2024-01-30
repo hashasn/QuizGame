@@ -86,7 +86,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         userName,
         stringScore,
       );
-      print('here in is right bloc');
+
       borderColors[event.index] = Colors.green;
 
       quiz.fold(
@@ -101,7 +101,6 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     }
 
     if (!event.isRight) {
-      print('here in is wrong bloc bloc');
       for (int i = 0; i < borderColors.length; i++) {
         if (i == event.asnwerIndex) {
           borderColors[i] = Colors.green;
@@ -120,7 +119,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       );
     }
     await Future.delayed(Duration(seconds: 3));
-    print('waiting to send succes bloc');
+
     count++;
 
     quiz.fold(
@@ -132,7 +131,6 @@ class GameBloc extends Bloc<GameEvent, GameState> {
           canAnswer: true,
           color: borderColorsNew)),
     );
-    print('managed to emit success bloc');
   }
 
   FutureOr<void> gameResultsEvent(
@@ -149,7 +147,11 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   }
 
   FutureOr<void> backToLobbyEvent(
-      BackToLobbyEvent event, Emitter<GameState> emit) {
+      BackToLobbyEvent event, Emitter<GameState> emit) async {
+    emit(GameLoadingState(loadString: "Ending Game....."));
+    await Future.delayed(Duration(seconds: 1));
+    emit(GameLoadingState(loadString: " Going home....."));
+    await Future.delayed(Duration(seconds: 1));
     deleteGame(gameCode);
     emit(BackToLobbyActionState());
   }

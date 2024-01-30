@@ -86,7 +86,7 @@ class GameResutlsPage extends StatelessWidget {
                         BlocProvider.of<GameBloc>(context)
                             .add(BackToLobbyEvent());
                       },
-                      child: Text('Back to lobby')),
+                      child: Text('Go Home')),
                 ),
               ))
         ],

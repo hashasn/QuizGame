@@ -45,8 +45,6 @@ import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'features/play_online/presentation/bloc/resultsBloc/results_bloc.dart';
-
 final getIt = GetIt.instance;
 
 // @InjectableInit(
@@ -130,7 +128,6 @@ void initFour() {
 
   //blocs
   getIt.registerFactory(() => GameBloc(getIt(), getIt(), getIt(), getIt()));
-  getIt.registerFactory(() => ResultsBloc(getIt()));
 
   //Usecase
   getIt.registerSingleton(OnlinePlayQuiz(repository: getIt()));
