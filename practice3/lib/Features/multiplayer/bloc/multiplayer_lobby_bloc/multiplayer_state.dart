@@ -45,6 +45,10 @@ class LeaveGameActionState extends MultiplayerActionState {}
 
 class StartGameActionState extends MultiplayerActionState {
   final String username;
-
-  StartGameActionState({required this.username});
+  final int time;
+  final int count;
+  StartGameActionState(
+      {required this.username, required this.time, required this.count});
+  @override
+  List<Object> get props => [count];
 }

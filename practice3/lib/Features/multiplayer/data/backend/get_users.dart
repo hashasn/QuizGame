@@ -5,7 +5,7 @@ import 'package:footy/core/error/exceptions.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-const uri = 'http://192.168.0.4:2000/api/v1';
+const uri = 'http://127.0.0.1:2000/api/v1';
 
 class GetUsers {
   final http.Client client;

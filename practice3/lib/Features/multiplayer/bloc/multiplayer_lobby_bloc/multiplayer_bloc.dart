@@ -25,6 +25,7 @@ class MultiplayerBloc extends Bloc<MultiplayerEvent, MultiplayerState> {
   String name = '';
   String code = '';
   String userName = '';
+  int count = 0;
 
   MultiplayerBloc(this.usecase, this.getQuizUsecase)
       : super(MultiplayerInitial()) {
@@ -81,7 +82,7 @@ class MultiplayerBloc extends Bloc<MultiplayerEvent, MultiplayerState> {
   FutureOr<void> lobbyInitialEvent(
       LobbyInitialEvent event, Emitter<MultiplayerState> emit) async {
     print(' am back here');
-    emit(LobbyLoadingstate(loadingString: 'joining game.....'));
+    emit(LobbyLoadingstate(loadingString: 'joining Lobby.....'));
     await Future.delayed(Duration(seconds: 1));
     name = event.name;
     code = event.code;
@@ -143,17 +144,22 @@ class MultiplayerBloc extends Bloc<MultiplayerEvent, MultiplayerState> {
 
   FutureOr<void> startGameEvent(
       StartGameEvent event, Emitter<MultiplayerState> emit) {
+    int time = int.parse(event.time);
     List<User> users = [];
     for (int i = 0; i < event.players.users.length; i++) {
-      users.add(User(name: event.players.users[i], score: '0'));
+      users
+          .add(User(name: event.players.users[i], score: '0', complete: false));
     }
-    CreateGame game =
-        CreateGame(quizId: event.id, players: users, gameCode: code);
+    CreateGame game = CreateGame(
+        quizId: event.id, players: users, gameCode: code, time: time);
     print('game id is ${event.id}');
 
     game.AddGame();
-    socket.sendMessage('game');
-    emit(StartGameActionState(username: userName));
+
+    socket.closeConnection();
+    count++;
+
+    emit(StartGameActionState(username: userName, time: time, count: count));
   }
 }
 

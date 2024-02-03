@@ -5,7 +5,7 @@ import 'package:footy/features/Quizzes/Data/models/model_quizzes.dart';
 import 'package:footy/features/multiplayer/data/MOdels/game_model.dart';
 import 'package:http/http.dart' as http;
 
-const uri = 'http://192.168.0.4:2000/api/v1';
+const uri = 'http://127.0.0.1:2000/api/v1';
 
 class FetchGameData {
   final http.Client client;
@@ -24,10 +24,10 @@ class FetchGameData {
       //print('data is $data');
       final Map<String, dynamic> decodedData = jsonDecode(data);
       //print('decoded data is $decodedData');
-      // print('fONeeee${decodedData["data"]["game"]["quiz"]}');
+      print('fONeeee${decodedData["data"]["finalGame"]['quiz']}');
 
       final Map<String, dynamic> gameData =
-          decodedData["data"]["game"][0]["quiz"];
+          decodedData["data"]["finalGame"]["quiz"];
       //  print('lobby data is $lobbyData');
       return QuizeModel.fromJson(gameData);
     } else {
@@ -48,7 +48,7 @@ class FetchGameData {
       // print('decoded data is $decodedData');
       // print('fONeeee${decodedData["data"]["game"]["quiz"]}');
 
-      final Map<String, dynamic> gameData = decodedData["data"]["game"][0];
+      final Map<String, dynamic> gameData = decodedData["data"]["finalGame"];
       print('lobby data is ${gameData['users'].length}');
       for (int i = 0; i < gameData['users'].length; i++) {
         user.add(User.fromJson(gameData['users'][i]));
@@ -59,9 +59,10 @@ class FetchGameData {
     }
   }
 
-  void updateScore(String code, String name, String score) {
+  void updateScore(String code, String name, String score, bool isComplete) {
     final client = http.Client();
-    User newUser = User(name: name, score: score);
+
+    User newUser = User(name: name, score: score, complete: isComplete);
     client.patch(
       Uri.parse('$uri/game?gameCode=$code'),
       body: json.encode(newUser.toJson()),
@@ -69,6 +70,26 @@ class FetchGameData {
         'Content-Type': 'application/json; charset=UTF-8',
       },
     );
+  }
+
+  Future<int> getTime(String code) async {
+    final client = http.Client();
+    final res = await client.get(
+      Uri.parse('$uri/game?gameCode=$code'),
+    );
+    if (res.statusCode == 200) {
+      final data = res.body;
+      //print('data is $data');
+      final Map<String, dynamic> decodedData = jsonDecode(data);
+      // print('decoded data is $decodedData');
+      // print('fONeeee${decodedData["data"]["game"]["quiz"]}');
+
+      final Map<String, dynamic> gameData = decodedData["data"]["finalGame"];
+      int time = gameData['time'];
+      return time;
+    } else {
+      throw ServerException();
+    }
   }
 
   void deleteGameColl(String gameCode) {

@@ -26,15 +26,18 @@ import 'package:footy/features/play_online/business/repositories/add_score_repo.
 import 'package:footy/features/play_online/business/repositories/delete_game_repo.dart';
 import 'package:footy/features/play_online/business/repositories/get_quiz_online_repo.dart';
 import 'package:footy/features/play_online/business/repositories/get_score_repo.dart';
+import 'package:footy/features/play_online/business/repositories/get_time_repo.dart';
 import 'package:footy/features/play_online/business/usecases/add_user_score.dart';
 import 'package:footy/features/play_online/business/usecases/delete_game.dart';
 import 'package:footy/features/play_online/business/usecases/get_quiz_online.dart';
 import 'package:footy/features/play_online/business/usecases/get_score.dart';
+import 'package:footy/features/play_online/business/usecases/get_time.dart';
 import 'package:footy/features/play_online/data/backend/game_data.dart';
 import 'package:footy/features/play_online/data/repository/add_score_repo_impl.dart';
 import 'package:footy/features/play_online/data/repository/delete_game_repo_impl.dart';
 import 'package:footy/features/play_online/data/repository/get_quiz_online_repo_impl.dart';
 import 'package:footy/features/play_online/data/repository/get_score_repo_impl.dart';
+import 'package:footy/features/play_online/data/repository/get_time_repo_impl.dart';
 
 import 'package:footy/features/play_online/presentation/bloc/game_bloc.dart';
 import 'package:http/http.dart' as http;
@@ -125,13 +128,16 @@ void initFour() {
   getIt.registerSingleton<GetScoreRepo>(GetScoreRepoImpl(data: getIt()));
   getIt
       .registerSingleton<DeleteGameRepo>(DeleteGameRepoImpl(gameData: getIt()));
+  getIt.registerSingleton<GetTimeRepo>(GetTimeRepoImpl(data: getIt()));
 
   //blocs
-  getIt.registerFactory(() => GameBloc(getIt(), getIt(), getIt(), getIt()));
+  getIt.registerFactory(
+      () => GameBloc(getIt(), getIt(), getIt(), getIt(), getIt()));
 
   //Usecase
   getIt.registerSingleton(OnlinePlayQuiz(repository: getIt()));
   getIt.registerSingleton(GetScore(repository: getIt()));
   getIt.registerSingleton(AddScore(repo: getIt()));
   getIt.registerSingleton(DeleteGame(repo: getIt()));
+  getIt.registerSingleton(GetTime(repository: getIt()));
 }

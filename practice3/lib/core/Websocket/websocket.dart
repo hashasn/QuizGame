@@ -5,7 +5,7 @@ class WebSocket {
   late WebSocketChannel s;
   WebSocketChannel connect() {
     s = WebSocketChannel.connect(
-      Uri.parse('ws://192.168.0.4:2000/api/v1'),
+      Uri.parse('ws://127.0.0.1:2000/api/v1'),
     );
 
     // s.sink.add('Hello');

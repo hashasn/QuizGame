@@ -23,15 +23,19 @@ class GameSuccessState extends GameState {
   final bool canAnswer;
   final List<Color> color;
   final List<User> users;
+  final String timerSetting;
+  final int time;
 
-  GameSuccessState({
-    required this.qs,
-    required this.count,
-    required this.canAnswer,
-    required this.color,
-    required this.users,
-  });
+  GameSuccessState(
+      {required this.qs,
+      required this.count,
+      required this.canAnswer,
+      required this.color,
+      required this.users,
+      required this.timerSetting,
+      required this.time});
 
+  @override
   List<Object> get props => [count, canAnswer];
 }
 
@@ -45,8 +49,11 @@ class GameNewQuestionState extends GameActionState {}
 
 class GameResultsState extends GameState {
   final List<User> users;
+  final bool complete;
 
-  GameResultsState({required this.users});
+  GameResultsState({required this.users, required this.complete});
+  @override
+  List<Object> get props => [users];
 }
 
 class BackToLobbyActionState extends GameActionState {}

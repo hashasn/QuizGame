@@ -28,6 +28,11 @@ class LeaveGameEvent extends MultiplayerEvent {}
 class StartGameEvent extends MultiplayerEvent {
   final String id;
   final WaitingLobbyUser players;
+  final String time;
 
-  StartGameEvent({required this.id, required this.players});
+  StartGameEvent({
+    required this.id,
+    required this.players,
+    required this.time,
+  });
 }

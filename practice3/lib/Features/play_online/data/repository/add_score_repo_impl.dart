@@ -13,9 +13,9 @@ class AddScoreRepoImpl implements AddScoreRepo {
 
   @override
   Future<Either<Failure, void>> addScore(
-      String code, String name, String score) async {
+      String code, String name, String score, bool isComplete) async {
     try {
-      data.updateScore(code, name, score);
+      data.updateScore(code, name, score, isComplete);
       return Right(Void);
     } on ServerException {
       return Left(ServerFailure());

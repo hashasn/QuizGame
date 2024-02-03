@@ -5,7 +5,9 @@ import 'package:footy/features/play_online/presentation/bloc/game_bloc.dart';
 
 class GameResutlsPage extends StatelessWidget {
   final List<User> users;
-  const GameResutlsPage({super.key, required this.users});
+  final bool isComplete;
+  const GameResutlsPage(
+      {super.key, required this.users, required this.isComplete});
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +79,7 @@ class GameResutlsPage extends StatelessWidget {
                       ));
                 }),
           ),
+          Text(isComplete ? '' : 'Waiting for players to finish'),
           Expanded(
               flex: 2,
               child: Container(
@@ -86,7 +89,7 @@ class GameResutlsPage extends StatelessWidget {
                         BlocProvider.of<GameBloc>(context)
                             .add(BackToLobbyEvent());
                       },
-                      child: Text('Go Home')),
+                      child: Text('back to lobby')),
                 ),
               ))
         ],

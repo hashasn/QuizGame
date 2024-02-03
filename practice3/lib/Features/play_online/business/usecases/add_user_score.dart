@@ -7,7 +7,8 @@ class AddScore {
 
   AddScore({required this.repo});
 
-  Future<Either<Failure, void>> call(String code, String name, String score) {
-    return repo.addScore(code, name, score);
+  Future<Either<Failure, void>> call(
+      String code, String name, String score, bool isComplete) {
+    return repo.addScore(code, name, score, isComplete);
   }
 }

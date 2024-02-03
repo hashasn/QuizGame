@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:footy/features/multiplayer/data/MOdels/waiting_lobby_users_model.dart';
 import 'package:http/http.dart' as http;
 
-const uri = 'http://192.168.0.4:2000/api/v1';
+const uri = 'http://127.0.0.1:2000/api/v1';
 
 class AddUsers {
   final String code;

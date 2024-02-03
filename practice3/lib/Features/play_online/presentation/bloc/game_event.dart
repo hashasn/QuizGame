@@ -34,3 +34,5 @@ class GameAnswerSelected extends GameEvent {
 class GameResultsEvent extends GameEvent {}
 
 class BackToLobbyEvent extends GameEvent {}
+
+class GameResultsUpdateEvent extends GameEvent {}

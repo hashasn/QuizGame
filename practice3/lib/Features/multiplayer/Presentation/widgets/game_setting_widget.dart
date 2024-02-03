@@ -74,11 +74,17 @@ class _GameSettingWidgetState extends State<GameSettingWidget> {
                               ),
                               onPressed: () {
                                 setState(() {
-                                  selectedQuiz =
-                                      widget.quizzes.data.quizes[index];
                                   if (selectedList[index]) {
+                                    selectedQuiz = Quize(
+                                        id: '',
+                                        title: '',
+                                        image: '',
+                                        questions: [],
+                                        category: '');
                                     selectedList[index] = false;
                                   } else {
+                                    selectedQuiz =
+                                        widget.quizzes.data.quizes[index];
                                     selectedList[index] = true;
                                     for (int i = 0;
                                         i < selectedList.length;
@@ -120,8 +126,14 @@ class _GameSettingWidgetState extends State<GameSettingWidget> {
           ),
           ElevatedButton(
               onPressed: () {
-                BlocProvider.of<MultiplayerBloc>(context).add(StartGameEvent(
-                    id: selectedQuiz.id, players: widget.players));
+                if (selectedQuiz.questions.isNotEmpty) {
+                  BlocProvider.of<MultiplayerBloc>(context).add(StartGameEvent(
+                    id: selectedQuiz.id,
+                    players: widget.players,
+                    time: dropdownValue,
+                  ));
+                }
+                Null;
               },
               child: Text('Start Game'))
         ],
