@@ -79,7 +79,10 @@ class GameResutlsPage extends StatelessWidget {
                       ));
                 }),
           ),
-          Text(isComplete ? '' : 'Waiting for players to finish'),
+          Text(
+            isComplete ? '' : 'Waiting for players to finish',
+            style: TextStyle(color: Colors.greenAccent),
+          ),
           Expanded(
               flex: 2,
               child: Container(

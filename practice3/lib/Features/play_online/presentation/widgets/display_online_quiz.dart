@@ -114,13 +114,17 @@ class _QuestiosnWidgetState extends State<QuestiosnWidget> {
           containerWidget(
               widget.q.options[3], widget.q.answers, 3, context, asnwerIndex),
           const SizedBox(height: 30),
-          LinearTimer(
-            controller: widget.timerController1,
-            duration: Duration(seconds: widget.time),
-            onTimerEnd: () {
-              BlocProvider.of<GameBloc>(context).add(GameAnswerSelected(
-                  isRight: false, index: 10, asnwerIndex: asnwerIndex));
-            },
+          Padding(
+            padding: EdgeInsets.all(15),
+            child: LinearTimer(
+              controller: widget.timerController1,
+              duration: Duration(seconds: widget.time),
+              backgroundColor: Colors.grey,
+              onTimerEnd: () {
+                BlocProvider.of<GameBloc>(context).add(GameAnswerSelected(
+                    isRight: false, index: 10, asnwerIndex: asnwerIndex));
+              },
+            ),
           )
         ],
       ),

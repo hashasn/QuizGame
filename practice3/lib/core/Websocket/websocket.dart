@@ -5,7 +5,7 @@ class WebSocket {
   late WebSocketChannel s;
   WebSocketChannel connect() {
     s = WebSocketChannel.connect(
-      Uri.parse('ws://127.0.0.1:2000/api/v1'),
+      Uri.parse('ws://quizy-232642f57fa5.herokuapp.com/api/v1'),
     );
 
     // s.sink.add('Hello');
