@@ -52,6 +52,11 @@ class MultiplayerBloc extends Bloc<MultiplayerEvent, MultiplayerState> {
                 add(LobbychangedEvent());
               }
             }
+          } else if (event is String && event.contains('documentKey')) {
+            String coll = json.decode(event)['ns']['coll'];
+            if (coll == 'gameschemas') {
+              //do nothing
+            }
           } else {
             //Listen for update change
 
@@ -136,12 +141,6 @@ class MultiplayerBloc extends Bloc<MultiplayerEvent, MultiplayerState> {
     emit(LeaveGameActionState());
   }
 
-  @override
-  Future<void> close() {
-    socket.closeConnection();
-    return super.close();
-  }
-
   FutureOr<void> startGameEvent(
       StartGameEvent event, Emitter<MultiplayerState> emit) {
     int time = int.parse(event.time);
@@ -156,10 +155,15 @@ class MultiplayerBloc extends Bloc<MultiplayerEvent, MultiplayerState> {
 
     game.AddGame();
 
-    socket.closeConnection();
     count++;
 
     emit(StartGameActionState(username: userName, time: time, count: count));
+  }
+
+  @override
+  Future<void> close() {
+    socket.closeConnection();
+    return super.close();
   }
 }
 

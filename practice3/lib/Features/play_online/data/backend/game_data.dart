@@ -24,7 +24,7 @@ class FetchGameData {
       //print('data is $data');
       final Map<String, dynamic> decodedData = jsonDecode(data);
       //print('decoded data is $decodedData');
-      print('fONeeee${decodedData["data"]["finalGame"]['quiz']}');
+      // print('fONeeee${decodedData["data"]["finalGame"]['quiz']}');
 
       final Map<String, dynamic> gameData =
           decodedData["data"]["finalGame"]["quiz"];
@@ -49,7 +49,7 @@ class FetchGameData {
       // print('fONeeee${decodedData["data"]["game"]["quiz"]}');
 
       final Map<String, dynamic> gameData = decodedData["data"]["finalGame"];
-      print('lobby data is ${gameData['users'].length}');
+      // print('lobby data is ${gameData['users'].length}');
       for (int i = 0; i < gameData['users'].length; i++) {
         user.add(User.fromJson(gameData['users'][i]));
       }

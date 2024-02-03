@@ -170,7 +170,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     if (count == 9) {
       isComplete = true;
     }
-    print('count is $count, iscomplete is $isComplete');
+    // print('count is $count, iscomplete is $isComplete');
     addSCore(gameCode, userName, stringScore, isComplete);
 
     await Future.delayed(Duration(seconds: 3));
