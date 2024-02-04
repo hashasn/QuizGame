@@ -4,10 +4,11 @@ import 'dart:math';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:footy/features/multiplayer/business/usecase/add_users_to_lobby.dart';
+import 'package:footy/features/multiplayer/business/usecase/delete_users_lobby.dart';
 import 'package:footy/features/multiplayer/business/usecase/get_lobby_users.dart';
 import 'package:footy/features/multiplayer/data/MOdels/waiting_lobby_users_model.dart';
 import 'package:footy/core/Websocket/websocket.dart';
-import 'package:footy/features/multiplayer/data/backend/add_user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'join_lobby_event.dart';
@@ -15,11 +16,14 @@ part 'join_lobby_state.dart';
 
 class JoinLobbyBloc extends Bloc<JoinLobbyEvent, JoinLobbyState> {
   final GetPlayers getUsers;
+  final AddNewUsers addNewUsers;
+  final DeleteUser deleteUser;
   WebSocket socket = WebSocket();
   String name = '';
   String code = '';
   String userName = '';
-  JoinLobbyBloc(this.getUsers) : super(JoinLobbyInitial()) {
+  JoinLobbyBloc(this.getUsers, this.addNewUsers, this.deleteUser)
+      : super(JoinLobbyInitial()) {
     socket.connect();
 
     socket.getMessageStream().listen(
@@ -67,8 +71,13 @@ class JoinLobbyBloc extends Bloc<JoinLobbyEvent, JoinLobbyState> {
     name = event.name;
     code = event.code;
     userName = '$name${randomNum()}';
-    AddUsers users = AddUsers(name: name, code: code, userName: userName);
-    String validate = await users.addNewUser();
+
+    ///add new player to the lobby and check is the lobby exists
+    final value = await addNewUsers(code, userName);
+    String validate = '';
+    value.fold((l) => emit(JoinLobbyErrorState(error: 'Server Failure')),
+        (r) => validate = r);
+
     if (validate == 'empty') {
       emit(JoinLobbyLoadingState(
           loadingString: 'GameCOde does not exist......'));
@@ -94,8 +103,11 @@ class JoinLobbyBloc extends Bloc<JoinLobbyEvent, JoinLobbyState> {
       JoinPlayerLeftEvent event, Emitter<JoinLobbyState> emit) async {
     emit(const JoinLobbyLoadingState(loadingString: 'Leaving Game......'));
     await Future.delayed(Duration(seconds: 1));
-    AddUsers users = AddUsers(name: name, code: code, userName: userName);
-    users.deleteUser();
+    //try deleting player from lobby
+    final value = await deleteUser(code, userName);
+    value.fold((l) => emit(JoinLobbyErrorState(error: 'Server Failure')),
+        (r) => emit(JoinLobbyLeaveGameState()));
+
     //await Future.delayed(Duration(seconds: 1));
 
     emit(JoinLobbyLeaveGameState());

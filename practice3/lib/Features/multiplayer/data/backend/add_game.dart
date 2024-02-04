@@ -6,22 +6,13 @@ import 'package:http/http.dart' as http;
 const uri = 'https://quizy-232642f57fa5.herokuapp.com/api/v1';
 
 class CreateGame {
-  final String gameCode;
-  final String quizId;
-  final List<User> players;
-  final GameModel newGame;
-  final int time;
+  final http.Client client;
 
-  CreateGame(
-      {required this.quizId,
-      required this.players,
-      required this.gameCode,
-      required this.time})
-      : newGame = GameModel(
-            users: players, quiz: quizId, gameCode: gameCode, time: time);
+  CreateGame({required this.client});
 
-  void AddGame() async {
-    final client = http.Client();
+  void AddGame(String code, String quizId, List<User> players, int time) async {
+    GameModel newGame =
+        GameModel(gameCode: code, quiz: quizId, users: players, time: time);
 
     await client.post(
       Uri.parse('$uri/game'),

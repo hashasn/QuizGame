@@ -5,13 +5,14 @@ import 'dart:math';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:footy/features/Quizzes/Business/Entities/quizzes.dart';
+import 'package:footy/features/multiplayer/business/usecase/create_game.dart';
+import 'package:footy/features/multiplayer/business/usecase/create_lobby.dart';
+import 'package:footy/features/multiplayer/business/usecase/delete_lobby.dart';
 import 'package:footy/features/multiplayer/business/usecase/get_lobby_users.dart';
 import 'package:footy/features/multiplayer/data/MOdels/game_model.dart';
 import 'package:footy/features/multiplayer/data/MOdels/waiting_lobby_users_model.dart';
 import 'package:footy/core/Websocket/websocket.dart';
 import 'package:footy/features/multiplayer/business/usecase/get_quizzes.dart';
-import 'package:footy/features/multiplayer/data/backend/add_game.dart';
-import 'package:footy/features/multiplayer/data/backend/add_user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'multiplayer_event.dart';
@@ -20,6 +21,9 @@ part 'multiplayer_state.dart';
 class MultiplayerBloc extends Bloc<MultiplayerEvent, MultiplayerState> {
   final GetPlayers usecase;
   final GetQuizzesForMultiplayer getQuizUsecase;
+  final CreateLobby createLobby;
+  final DeleteLobby deleteLobby;
+  final CreateGameUseCase createGame;
   final WebSocket socket = WebSocket();
 
   String name = '';
@@ -27,7 +31,8 @@ class MultiplayerBloc extends Bloc<MultiplayerEvent, MultiplayerState> {
   String userName = '';
   int count = 0;
 
-  MultiplayerBloc(this.usecase, this.getQuizUsecase)
+  MultiplayerBloc(this.usecase, this.getQuizUsecase, this.createLobby,
+      this.deleteLobby, this.createGame)
       : super(MultiplayerInitial()) {
     socket.connect();
 
@@ -86,14 +91,13 @@ class MultiplayerBloc extends Bloc<MultiplayerEvent, MultiplayerState> {
 
   FutureOr<void> lobbyInitialEvent(
       LobbyInitialEvent event, Emitter<MultiplayerState> emit) async {
-    print(' am back here');
     emit(LobbyLoadingstate(loadingString: 'joining Lobby.....'));
     await Future.delayed(Duration(seconds: 1));
     name = event.name;
     code = event.code;
     userName = '$name${randomNum()}';
-    AddUsers user = AddUsers(name: name, code: code, userName: userName);
-    user.addUsers();
+    createLobby(userName, code);
+
     // await Future.delayed(Duration(seconds: 1));
     // String id = await user.getId();
 
@@ -133,31 +137,33 @@ class MultiplayerBloc extends Bloc<MultiplayerEvent, MultiplayerState> {
   }
 
   FutureOr<void> leaveGameEvent(
-      LeaveGameEvent event, Emitter<MultiplayerState> emit) {
+      LeaveGameEvent event, Emitter<MultiplayerState> emit) async {
     emit(LobbyLoadingstate(loadingString: 'Leaving game.....'));
     Future.delayed(Duration(seconds: 1));
-    AddUsers user = AddUsers(name: name, code: code, userName: userName);
-    user.deleteAllUsers();
+    final value = await deleteLobby(code);
+    value.fold(
+        (l) => emit(
+              LobbyErrorState(error: ' Server Faliure'),
+            ),
+        (r) => emit(LeaveGameActionState()));
     emit(LeaveGameActionState());
   }
 
   FutureOr<void> startGameEvent(
-      StartGameEvent event, Emitter<MultiplayerState> emit) {
+      StartGameEvent event, Emitter<MultiplayerState> emit) async {
     int time = int.parse(event.time);
     List<User> users = [];
     for (int i = 0; i < event.players.users.length; i++) {
       users
           .add(User(name: event.players.users[i], score: '0', complete: false));
     }
-    CreateGame game = CreateGame(
-        quizId: event.id, players: users, gameCode: code, time: time);
-    print('game id is ${event.id}');
 
-    game.AddGame();
-
+    final value = await createGame(code, event.id, users, time);
     count++;
-
-    emit(StartGameActionState(username: userName, time: time, count: count));
+    value.fold(
+        (l) => emit(LobbyErrorState(error: 'Failed to Create game')),
+        (r) => emit(StartGameActionState(
+            username: userName, time: time, count: count)));
   }
 
   @override

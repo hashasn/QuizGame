@@ -7,29 +7,23 @@ import 'package:http/http.dart' as http;
 const uri = 'https://quizy-232642f57fa5.herokuapp.com/api/v1';
 
 class AddUsers {
-  final String code;
-  final String name;
-  final String userName;
-  final WaitingLobbyUser user;
+  final http.Client client;
 
-  AddUsers({required this.name, required this.code, required this.userName})
-      : user = WaitingLobbyUser(users: [userName], lobbyCode: code);
-
-  void addUsers() async {
-    final client = http.Client();
+  AddUsers({required this.client});
+  void addUsers(String userName, String code) async {
+    WaitingLobbyUser lobby =
+        WaitingLobbyUser(users: [userName], lobbyCode: code);
 
     await client.post(
       Uri.parse('$uri/waitinglobby'),
-      body: json.encode(user.toJson()),
+      body: json.encode(lobby.toJson()),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
     );
   }
 
-  Future<String> addNewUser() async {
-    final client = http.Client();
-
+  Future<String> addNewUser(String code, String userName) async {
     final res = await client.get(
       Uri.parse('$uri/waitinglobby?lobbyCode=$code'),
       headers: <String, String>{
@@ -55,11 +49,9 @@ class AddUsers {
     }
   }
 
-  void deleteUser() async {
-    final client = http.Client();
-
+  void deleteUser(String gameCode, String userName) async {
     final res = await client.get(
-      Uri.parse('$uri/waitinglobby?lobbyCode=$code'),
+      Uri.parse('$uri/waitinglobby?lobbyCode=$gameCode'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -79,10 +71,9 @@ class AddUsers {
     );
   }
 
-  void deleteAllUsers() async {
-    final client = http.Client();
+  void deleteAllUsers(String lobbyCode) async {
     final res = await client.get(
-      Uri.parse('$uri/waitinglobby?lobbyCode=$code'),
+      Uri.parse('$uri/waitinglobby?lobbyCode=$lobbyCode'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -100,8 +91,7 @@ class AddUsers {
     );
   }
 
-  Future<String> getId() async {
-    final client = http.Client();
+  Future<String> getId(String code) async {
     final res = await client.get(
       Uri.parse('$uri/waitinglobby?lobbyCode=$code'),
       headers: <String, String>{
