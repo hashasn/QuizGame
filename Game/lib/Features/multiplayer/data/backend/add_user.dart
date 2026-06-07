@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:footy/features/multiplayer/data/MOdels/waiting_lobby_users_model.dart';
 import 'package:http/http.dart' as http;
 
-const uri = 'https://quizy-232642f57fa5.herokuapp.com/api/v1';
+const uri = 'https://quizgame-cr1w.onrender.com/api/v1';
 
 class AddUsers {
   final http.Client client;

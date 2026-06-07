@@ -10,7 +10,7 @@ abstract class QuizzesRemoteDataSource {
   Future<QuizzesModel> getQuizzes();
 }
 
-const uri = 'https://quizy-232642f57fa5.herokuapp.com/api/v1';
+const uri = 'https://quizgame-cr1w.onrender.com/api/v1';
 
 class QuizzesRemoteDataSourceImpl implements QuizzesRemoteDataSource {
   final http.Client client;

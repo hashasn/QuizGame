@@ -5,7 +5,7 @@ import 'package:footy/features/Quizzes/Data/models/model_quizzes.dart';
 import 'package:footy/features/multiplayer/data/MOdels/game_model.dart';
 import 'package:http/http.dart' as http;
 
-const uri = 'https://quizy-232642f57fa5.herokuapp.com/api/v1';
+const uri = 'https://quizgame-cr1w.onrender.com/api/v1';
 
 class FetchGameData {
   final http.Client client;

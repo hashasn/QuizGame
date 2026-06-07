@@ -61,6 +61,7 @@ import 'package:footy/features/play_online/data/repository/get_time_repo_impl.da
 
 import 'package:footy/features/play_online/presentation/bloc/game_bloc.dart';
 import 'package:http/http.dart' as http;
+import 'package:footy/core/Websocket/websocket.dart';
 import 'package:footy/core/network/network_info.dart';
 
 import 'package:get_it/get_it.dart';
@@ -120,6 +121,7 @@ Future<void> initTwo() async {
 }
 
 void initThree() {
+  getIt.registerFactory<WebSocket>(() => WebSocket());
   getIt.registerSingleton(GetUsers(client: getIt()));
   getIt.registerSingleton(GetRemoteQuizzesMultiplaer(client: getIt()));
   getIt.registerSingleton(AddUsers(client: getIt()));
@@ -147,7 +149,7 @@ void initThree() {
   getIt.registerFactory(() => JoinLobbyBloc(getIt(), getIt(), getIt()));
 
   getIt.registerFactory(
-      () => MultiplayerBloc(getIt(), getIt(), getIt(), getIt(), getIt()));
+      () => MultiplayerBloc(getIt(), getIt(), getIt(), getIt(), getIt(), getIt()));
 
   //Usecase
   getIt.registerSingleton(GetPlayers(repo: getIt()));
@@ -172,7 +174,7 @@ void initFour() {
 
   //blocs
   getIt.registerFactory(
-      () => GameBloc(getIt(), getIt(), getIt(), getIt(), getIt()));
+      () => GameBloc(getIt(), getIt(), getIt(), getIt(), getIt(), getIt()));
 
   //Usecase
   getIt.registerSingleton(OnlinePlayQuiz(repository: getIt()));

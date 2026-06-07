@@ -19,7 +19,7 @@ part 'game_event.dart';
 part 'game_state.dart';
 
 class GameBloc extends Bloc<GameEvent, GameState> {
-  final WebSocket socket = WebSocket();
+  final WebSocket socket;
   final OnlinePlayQuiz gameQuiz;
   final GetTime getTime;
   final GetScore getScore;
@@ -36,7 +36,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
   int count = 0;
   GameBloc(this.gameQuiz, this.getScore, this.addScore, this.deleteGame,
-      this.getTime)
+      this.getTime, this.socket)
       : super(GameInitial()) {
     socket.connect();
     socket.sendMessage('game');

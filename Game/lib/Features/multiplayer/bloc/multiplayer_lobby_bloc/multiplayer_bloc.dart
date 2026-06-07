@@ -24,7 +24,7 @@ class MultiplayerBloc extends Bloc<MultiplayerEvent, MultiplayerState> {
   final CreateLobby createLobby;
   final DeleteLobby deleteLobby;
   final CreateGameUseCase createGame;
-  final WebSocket socket = WebSocket();
+  final WebSocket socket;
 
   String name = '';
   String code = '';
@@ -32,7 +32,7 @@ class MultiplayerBloc extends Bloc<MultiplayerEvent, MultiplayerState> {
   int count = 0;
 
   MultiplayerBloc(this.usecase, this.getQuizUsecase, this.createLobby,
-      this.deleteLobby, this.createGame)
+      this.deleteLobby, this.createGame, this.socket)
       : super(MultiplayerInitial()) {
     socket.connect();
 
