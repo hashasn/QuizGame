@@ -28,7 +28,9 @@ class _QuizStartPageState extends State<QuizStartPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('home'),
+        title: const Text('Quiz', style: TextStyle(fontWeight: FontWeight.bold)),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
       body: buildBody(
         context,

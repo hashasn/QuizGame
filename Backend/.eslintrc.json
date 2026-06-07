@@ -1,6 +1,19 @@
 {
   "extends": ["airbnb", "prettier", "plugin:node/recommended"],
   "plugins": ["prettier"],
+  "env": {
+    "node": true,
+    "jest": true,
+    "es2021": true
+  },
+  "overrides": [
+    {
+      "files": ["**/*.test.js", "**/tests/**/*.js"],
+      "rules": {
+        "import/no-extraneous-dependencies": "off"
+      }
+    }
+  ],
   "rules": {
     "prettier/prettier": "error",
     "spaced-comment": "off",

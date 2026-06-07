@@ -73,8 +73,11 @@ class PlayBloc extends Bloc<PlayEvent, PlayState> {
   FutureOr<void> timeOutevent(
       TimeOutEvent event, Emitter<PlayState> emit) async {
     emit(WrongAnswerStates());
+    // Rebuild the UI so the correct answer is highlighted before moving on.
+    quizz.fold((left) => emit(const PlayErrorState(error: 'Failed to start')),
+        (right) => emit(PlaySuccessState(qs: right, score: score.getScore())));
 
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 3));
     emit(NextQuestionStates());
     quizz.fold((left) => emit(const PlayErrorState(error: 'Failed to start')),
         (right) => emit(PlaySuccessState(qs: right, score: score.getScore())));

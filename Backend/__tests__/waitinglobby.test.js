@@ -32,7 +32,10 @@ test('creates a lobby and returns 201', async () => {
 // --- GET /api/v1/waitinglobby/:id ---
 
 test('fetches a lobby by ID and returns 200', async () => {
-  const lobby = await WaitingLobby.create({ lobbyCode: LOBBY_CODE, users: ['alice'] });
+  const lobby = await WaitingLobby.create({
+    lobbyCode: LOBBY_CODE,
+    users: ['alice'],
+  });
 
   const res = await request(app).get(`/api/v1/waitinglobby/${lobby._id}`);
 
@@ -52,7 +55,10 @@ test('returns 404 for a non-existent lobby ID', async () => {
 // --- POST /api/v1/waitinglobby/:id (add user) ---
 
 test('adds a user to the lobby and returns 201', async () => {
-  const lobby = await WaitingLobby.create({ lobbyCode: LOBBY_CODE, users: ['alice'] });
+  const lobby = await WaitingLobby.create({
+    lobbyCode: LOBBY_CODE,
+    users: ['alice'],
+  });
 
   const res = await request(app)
     .post(`/api/v1/waitinglobby/${lobby._id}`)
@@ -65,7 +71,10 @@ test('adds a user to the lobby and returns 201', async () => {
 // --- DELETE /api/v1/waitinglobby/deleteOneUSer/:id ---
 
 test('removes a specific user from the lobby and returns 204', async () => {
-  const lobby = await WaitingLobby.create({ lobbyCode: LOBBY_CODE, users: ['alice', 'bob'] });
+  const lobby = await WaitingLobby.create({
+    lobbyCode: LOBBY_CODE,
+    users: ['alice', 'bob'],
+  });
 
   const res = await request(app)
     .delete(`/api/v1/waitinglobby/deleteOneUSer/${lobby._id}`)
@@ -82,7 +91,10 @@ test('removes a specific user from the lobby and returns 204', async () => {
 // --- DELETE /api/v1/waitinglobby/:id ---
 
 test('deletes the entire lobby and returns 204', async () => {
-  const lobby = await WaitingLobby.create({ lobbyCode: LOBBY_CODE, users: ['alice'] });
+  const lobby = await WaitingLobby.create({
+    lobbyCode: LOBBY_CODE,
+    users: ['alice'],
+  });
 
   const res = await request(app).delete(`/api/v1/waitinglobby/${lobby._id}`);
 

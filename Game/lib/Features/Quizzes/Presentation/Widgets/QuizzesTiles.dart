@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:footy/Features/PlayQuiz/Presentation/Pages/QuizStartPage.dart';
 import 'package:footy/features/Quizzes/Presentation/bloc/quizzes_bloc.dart';
 import 'package:footy/features/Quizzes/Business/Entities/quizzes.dart';
 
@@ -12,76 +11,101 @@ class QuizzesTiles extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final q = quiz[count];
     return Padding(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Material(
-        elevation: 12,
-        borderRadius: BorderRadius.circular(10),
-        shadowColor: Colors.greenAccent,
-        child: Container(
-            margin: const EdgeInsets.all(10),
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              // border: Border.all(color: Colors.greenAccent),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  height: 200,
-                  width: double.maxFinite,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(quiz[count].image),
+        elevation: 8,
+        borderRadius: BorderRadius.circular(16),
+        shadowColor: Colors.greenAccent.withOpacity(0.25),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
+                children: [
+                  Container(
+                    height: 180,
+                    width: double.maxFinite,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: NetworkImage(q.image),
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  quiz[count].title,
-                  style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  quiz[count].category,
-                  style: const TextStyle(
-                      fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                // Text(productData.category),
-                const SizedBox(height: 20),
-                Row(
-                  //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      padding: const EdgeInsets.fromLTRB(16, 24, 16, 12),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Colors.transparent,
+                            Colors.black.withOpacity(0.85),
+                          ],
+                        ),
+                      ),
+                      child: Text(
+                        q.title,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
+                child: Row(
                   children: [
-                    Row(
-                      children: [
-                        ElevatedButton(
-                            onPressed: () {
-                              BlocProvider.of<QuizzesBloc>(context).add(
-                                  QuizzesButtonClickedEvent(
-                                      selectedQuiz: quiz[count]));
-                            },
-                            style: ElevatedButton.styleFrom(
-                              // foregroundColor: Colors.white, // background
-                              // backgroundColor: Colors.red,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                            ),
-                            child: const Text('PLAY')),
-                        // IconButton(
-                        //     onPressed: () {
-
-                        //     },
-                        //     icon: const Icon(Icons.shopping_bag_outlined)),
-                      ],
+                    Chip(
+                      label: Text(
+                        q.category,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      backgroundColor: Colors.greenAccent,
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
+                    const Spacer(),
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        BlocProvider.of<QuizzesBloc>(context).add(
+                          QuizzesButtonClickedEvent(selectedQuiz: q),
+                        );
+                      },
+                      icon: const Icon(Icons.play_arrow_rounded),
+                      label: const Text(
+                        'PLAY',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.greenAccent,
+                        foregroundColor: Colors.black,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
                     ),
                   ],
                 ),
-              ],
-            )),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

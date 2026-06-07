@@ -29,23 +29,20 @@ class DisplayQuiz extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(count);
-    // print('timer setting is $timerSetting');
     if (count >= q.questions.length) {
       BlocProvider.of<GameBloc>(context).add(GameResultsEvent());
-      return Container();
-    } else {
-      final question = q.questions[count];
-
-      return QuestiosnWidget(
-        q: question,
-        reset: reset,
-        borderColors: borderColors,
-        timerController1: timerController1,
-        timerSetting: timerSetting,
-        time: time,
-      );
+      return const SizedBox.shrink();
     }
+    return QuestiosnWidget(
+      q: q.questions[count],
+      reset: reset,
+      borderColors: borderColors,
+      timerController1: timerController1,
+      timerSetting: timerSetting,
+      time: time,
+      count: count,
+      total: q.questions.length,
+    );
   }
 }
 
@@ -56,14 +53,20 @@ class QuestiosnWidget extends StatefulWidget {
   final LinearTimerController timerController1;
   final String timerSetting;
   final int time;
-  const QuestiosnWidget(
-      {super.key,
-      required this.q,
-      required this.reset,
-      required this.borderColors,
-      required this.timerController1,
-      required this.timerSetting,
-      required this.time});
+  final int count;
+  final int total;
+
+  const QuestiosnWidget({
+    super.key,
+    required this.q,
+    required this.reset,
+    required this.borderColors,
+    required this.timerController1,
+    required this.timerSetting,
+    required this.time,
+    this.count = 0,
+    this.total = 0,
+  });
 
   @override
   State<QuestiosnWidget> createState() => _QuestiosnWidgetState();
@@ -82,92 +85,90 @@ class _QuestiosnWidgetState extends State<QuestiosnWidget> {
   @override
   Widget build(BuildContext context) {
     timerSet(widget.timerSetting, widget.timerController1);
-    int answerIndex = findRightOption(widget.q);
-    return Center(
-      child: Column(
-        children: [
-          const SizedBox(height: 20),
-          Container(
-            padding: const EdgeInsets.all(30),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              // border: Border.all(
-              //   color: Colors.black,
-              // )
-            ),
+    final answerIndex = _findRightOption(widget.q);
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+          child: LinearTimer(
+            controller: widget.timerController1,
+            duration: Duration(seconds: widget.time),
+            backgroundColor: Colors.white12,
+            color: Colors.greenAccent,
+            onTimerEnd: () {
+              BlocProvider.of<GameBloc>(context).add(GameAnswerSelected(
+                  isRight: false, index: 10, answerIndex: answerIndex));
+            },
+          ),
+        ),
+        if (widget.total > 0)
+          Padding(
+            padding: const EdgeInsets.only(top: 8),
             child: Text(
-              widget.q.prompt,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+              'Question ${widget.count + 1} of ${widget.total}',
+              style: const TextStyle(fontSize: 13, color: Colors.white54),
+            ),
+          ),
+        Expanded(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(24),
+              child: Text(
+                widget.q.prompt,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
-          const SizedBox(height: 30),
-          containerWidget(
-              widget.q.options[0], widget.q.answers, 0, context, answerIndex),
-          containerWidget(
-              widget.q.options[1], widget.q.answers, 1, context, answerIndex),
-          containerWidget(
-              widget.q.options[2], widget.q.answers, 2, context, answerIndex),
-          containerWidget(
-              widget.q.options[3], widget.q.answers, 3, context, answerIndex),
-          const SizedBox(height: 30),
-          Padding(
-            padding: EdgeInsets.all(15),
-            child: LinearTimer(
-              controller: widget.timerController1,
-              duration: Duration(seconds: widget.time),
-              backgroundColor: Colors.grey,
-              onTimerEnd: () {
-                BlocProvider.of<GameBloc>(context).add(GameAnswerSelected(
-                    isRight: false, index: 10, answerIndex: answerIndex));
-              },
-            ),
-          )
-        ],
-      ),
+        ),
+        ...List.generate(
+          widget.q.options.length,
+          (index) => _optionTile(
+              widget.q.options[index], widget.q.answers, index, context, answerIndex),
+        ),
+        const SizedBox(height: 24),
+      ],
     );
   }
 
-  Widget containerWidget(String option, String answer, int index,
+  Widget _optionTile(String option, String answer, int index,
       BuildContext context, int answerIndex) {
+    final borderColor = widget.borderColors[index];
     return InkWell(
+      borderRadius: BorderRadius.circular(14),
       onTap: () {
         if (widget.reset) {
-          if (option == answer) {
-            BlocProvider.of<GameBloc>(context).add(GameAnswerSelected(
-                isRight: true, index: index, answerIndex: answerIndex));
-          }
-          if (option != answer) {
-            BlocProvider.of<GameBloc>(context).add(GameAnswerSelected(
-                isRight: false, index: index, answerIndex: answerIndex));
-          }
+          BlocProvider.of<GameBloc>(context).add(GameAnswerSelected(
+            isRight: option == answer,
+            index: index,
+            answerIndex: answerIndex,
+          ));
         }
       },
       child: Container(
         width: double.infinity,
-        padding: EdgeInsets.all(12),
-        margin: EdgeInsets.symmetric(vertical: 5, horizontal: 30),
+        padding: const EdgeInsets.all(16),
+        margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 24),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(
-                width: 3,
-                style: BorderStyle.solid,
-                color: widget.borderColors[index])),
-        child: Text(option),
+          color: borderColor.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(width: 2, color: borderColor),
+        ),
+        child: Text(
+          option,
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+        ),
       ),
     );
   }
 
-  int findRightOption(Question q) {
-    int index = 0;
+  int _findRightOption(Question q) {
     for (int i = 0; i < q.options.length; i++) {
-      if (q.options[i] == q.answers) {
-        index = i;
-      }
+      if (q.options[i] == q.answers) return i;
     }
-    return index;
+    return 0;
   }
 }

@@ -13,52 +13,17 @@ class MyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('home'),
+        title: const Text(
+          'Choose a Quiz',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
       body: buildBody(context),
     );
   }
 }
-
-// class buildBody extends StatelessWidget {
-//   const buildBody(BuildContext context, {super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return BlocProvider(
-//       create: (BuildContext context) => getIt<QuizzesBloc>(),
-//       child: BlocBuilder<QuizzesBloc, QuizzesState>(
-//         builder: (context, state) {
-//           if (state is QuizzesInitial) {
-//             BlocProvider.of<QuizzesBloc>(context).add(QuizzesInitialEvent());
-//             return const CircularProgressIndicator();
-//           } else if (state is LoadingState) {
-//             return LoadingWidget(s: 'Loading....');
-//           } else if (state is SuccessState) {
-//             return QuizzesDisplay(
-//               qs: state.qs,
-//             );
-//           } else if (state is ErrorState) {
-//             return Text(state.error);
-//           } else {
-//             return Center(
-//                 child: Column(
-//               children: [
-//                 Text('Error Occured'),
-//                 ElevatedButton(
-//                     onPressed: () {
-//                       BlocProvider.of<QuizzesBloc>(context)
-//                           .add(QuizzesInitialEvent());
-//                     },
-//                     child: Text('retry'))
-//               ],
-//             ));
-//           }
-//         },
-//       ),
-//     );
-//   }
-// }
 
 class buildBody extends StatelessWidget {
   const buildBody(BuildContext context, {super.key});
@@ -94,13 +59,13 @@ class buildBody extends StatelessWidget {
             return Center(
                 child: Column(
               children: [
-                Text('Error Occured'),
+                const Text('Error Occured'),
                 ElevatedButton(
                     onPressed: () {
                       BlocProvider.of<QuizzesBloc>(context)
                           .add(QuizzesInitialEvent());
                     },
-                    child: Text('retry'))
+                    child: const Text('retry'))
               ],
             ));
           }

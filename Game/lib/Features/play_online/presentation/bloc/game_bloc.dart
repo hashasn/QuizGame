@@ -198,23 +198,18 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
   FutureOr<void> gameResultsEvent(
       GameResultsEvent event, Emitter<GameState> emit) async {
-    late List<User> users;
-    bool complete = true;
-    emit(GameLoadingState(loadString: "getting results"));
-    await Future.delayed(Duration(seconds: 3));
-    final score = await getScore(gameCode);
+    emit(GameLoadingState(loadString: "Getting results..."));
+    await Future.delayed(const Duration(seconds: 3));
+    final result = await getScore(gameCode);
 
-    score.fold(
-        (left) => emit(GameErrorState(error: 'Failed to  change state start')),
-        (right) => users = right);
-
-    for (int i = 0; i < users.length; i++) {
-      if (!users[i].complete) {
-        users.remove(users[i]);
-        complete = false;
-      }
-    }
-    emit(GameResultsState(users: users, complete: complete));
+    result.fold(
+      (left) => emit(GameErrorState(error: 'Failed to get results')),
+      (right) {
+        // Show all players immediately; complete drives the "Waiting..." banner.
+        final complete = right.every((u) => u.complete);
+        emit(GameResultsState(users: right, complete: complete));
+      },
+    );
   }
 
   FutureOr<void> backToLobbyEvent(
@@ -229,21 +224,15 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
   FutureOr<void> gameResultsUpdateEvent(
       GameResultsUpdateEvent event, Emitter<GameState> emit) async {
-    late List<User> users;
-    bool complete = true;
-    final score = await getScore(gameCode);
+    final result = await getScore(gameCode);
 
-    score.fold(
-        (left) => emit(GameErrorState(error: 'Failed to  change state start')),
-        (right) => users = right);
-
-    for (int i = 0; i < users.length; i++) {
-      if (!users[i].complete) {
-        users.remove(users[i]);
-        complete = false;
-      }
-    }
-    emit(GameResultsState(users: users, complete: complete));
+    result.fold(
+      (left) => emit(GameErrorState(error: 'Failed to get results')),
+      (right) {
+        final complete = right.every((u) => u.complete);
+        emit(GameResultsState(users: right, complete: complete));
+      },
+    );
   }
 
   @override

@@ -7,21 +7,19 @@ class LoadingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const Padding(
-            padding: EdgeInsets.all(16.0),
-            child: CircularProgressIndicator(),
-          ),
-          Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Text(s),
-          )
-        ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const CircularProgressIndicator(color: Colors.greenAccent),
+            const SizedBox(height: 24),
+            Text(
+              s,
+              style: const TextStyle(fontSize: 16, color: Colors.white70),
+            ),
+          ],
+        ),
       ),
-    ));
+    );
   }
 }

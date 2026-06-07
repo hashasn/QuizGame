@@ -15,7 +15,9 @@ const GAME_CODE = 'TEST01';
 const TEST_QUIZ = {
   title: 'Integration Test Quiz',
   image: 'test.png',
-  questions: [{ prompt: 'What is 2+2?', options: ['2', '3', '4', '5'], answers: '4' }],
+  questions: [
+    { prompt: 'What is 2+2?', options: ['2', '3', '4', '5'], answers: '4' },
+  ],
 };
 
 // Builds a valid game body from a quiz ObjectId.
@@ -54,7 +56,9 @@ test('creates a game and returns 201', async () => {
 
 test('returns an error when required fields are missing', async () => {
   // Sending a body with no quiz or users — mongoose validation should reject it.
-  const res = await request(app).post('/api/v1/game').send({ gameCode: GAME_CODE });
+  const res = await request(app)
+    .post('/api/v1/game')
+    .send({ gameCode: GAME_CODE });
 
   expect(res.status).toBeGreaterThanOrEqual(400);
 });

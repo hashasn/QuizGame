@@ -97,49 +97,109 @@ class _PlayerLobbyWidgetState extends State<PlayerLobbyWidget> {
     newUsers = widget.players;
     return Scaffold(
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 60, 20, 8),
+            child: Row(
+              children: [
+                const Icon(Icons.group_rounded, color: Colors.greenAccent),
+                const SizedBox(width: 8),
+                Text(
+                  'Players (${newUsers.users.length})',
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.fromLTRB(20, 0, 20, 16),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 14,
+                  height: 14,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: Colors.greenAccent,
+                  ),
+                ),
+                SizedBox(width: 8),
+                Text(
+                  'Waiting for host to start...',
+                  style: TextStyle(color: Colors.white54, fontSize: 13),
+                ),
+              ],
+            ),
+          ),
           Expanded(
             child: ListView.builder(
-                itemCount: newUsers.users.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: EdgeInsets.all(20),
-                    child: Material(
-                        elevation: 12,
-                        borderRadius: BorderRadius.circular(12),
-                        shadowColor: Colors.greenAccent,
-                        child: Center(
-                            child: Container(
-                                height: 80,
-                                width: double.maxFinite,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  //  border: Border.all(color: Colors.black)
-                                ),
-                                child: Row(children: [
-                                  SizedBox(width: 12),
-                                  Icon(
-                                    Icons.account_box_outlined,
-                                    size: 40,
-                                  ),
-                                  SizedBox(width: 12),
-                                  Text(
-                                    newUsers.users[index],
-                                    style: TextStyle(fontSize: 30),
-                                  ),
-                                ])))),
-                  );
-                }),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          ElevatedButton(
-              onPressed: () {
-                BlocProvider.of<JoinLobbyBloc>(context)
-                    .add(JoinPlayerLeftEvent());
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              itemCount: newUsers.users.length,
+              itemBuilder: (context, index) {
+                final name = newUsers.users[index];
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: Material(
+                    elevation: 4,
+                    borderRadius: BorderRadius.circular(14),
+                    shadowColor: Colors.greenAccent.withOpacity(0.2),
+                    child: Container(
+                      height: 72,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                      child: Row(
+                        children: [
+                          const SizedBox(width: 16),
+                          CircleAvatar(
+                            backgroundColor: Colors.green[800],
+                            child: Text(
+                              name.isNotEmpty ? name[0].toUpperCase() : '?',
+                              style: const TextStyle(
+                                color: Colors.greenAccent,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Text(name, style: const TextStyle(fontSize: 18)),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
               },
-              child: Text('LEAVE GAME'))
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: SizedBox(
+              width: double.maxFinite,
+              height: 52,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  BlocProvider.of<JoinLobbyBloc>(context)
+                      .add(JoinPlayerLeftEvent());
+                },
+                icon: const Icon(Icons.exit_to_app_rounded),
+                label: const Text(
+                  'Leave Game',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red[900],
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );

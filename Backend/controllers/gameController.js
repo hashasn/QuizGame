@@ -46,14 +46,12 @@ exports.create = catchAsync(async (req, res, next) => {
 exports.updateScore = catchAsync(async (req, res, next) => {
   const game = await gameModel.findOne({ gameCode: req.query.gameCode });
 
-  const { name, score } = req.body;
-  //console.log(`name is ${name} and score is ${score}`);
-
-  //console.log(`users length is ${game.users.length}`);
+  const { name, score, complete } = req.body;
 
   for (let i = 0; i < game.users.length; i++) {
     if (game.users[i].name === name) {
       game.users[i].score = score;
+      if (complete !== undefined) game.users[i].complete = complete;
     }
   }
 
