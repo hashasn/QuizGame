@@ -1,3 +1,4 @@
+/// Repository implementation — fetches quizzes from the API when online, falls back to SharedPreferences cache when offline.
 import 'package:dartz/dartz.dart';
 import 'package:footy/features/Quizzes/Business/Repositories/quizzes_repository.dart';
 import 'package:footy/core/error/exceptions.dart';

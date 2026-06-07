@@ -1,3 +1,4 @@
+/// Fetches the quiz catalogue from the remote API for use in the multiplayer lobby quiz picker.
 import 'dart:convert';
 
 import 'package:footy/core/error/exceptions.dart';

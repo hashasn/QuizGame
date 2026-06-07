@@ -1,4 +1,4 @@
-import 'dart:ffi';
+
 
 import 'package:dartz/dartz.dart';
 import 'package:footy/core/error/exceptions.dart';
@@ -15,7 +15,7 @@ class DeleteGameRepoImpl implements DeleteGameRepo {
   Future<Either<Failure, void>> deleteGame(String code) async {
     try {
       gameData.deleteGameColl(code);
-      return Right(Void);
+      return const Right(null);
     } on ServerException {
       return Left(ServerFailure());
     }

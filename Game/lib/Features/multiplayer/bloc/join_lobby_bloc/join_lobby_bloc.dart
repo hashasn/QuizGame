@@ -1,3 +1,4 @@
+/// BLoC for a joining player's lobby view — listens for lobby changes, game start, and host disconnect via WebSocket.
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
@@ -72,7 +73,7 @@ class JoinLobbyBloc extends Bloc<JoinLobbyEvent, JoinLobbyState> {
     code = event.code;
     userName = '$name${randomNum()}';
 
-    ///add new player to the lobby and check is the lobby exists
+    // adds the player to the lobby and returns 'empty' if the game code doesn't exist
     final value = await addNewUsers(code, userName);
     String validate = '';
     value.fold((l) => emit(JoinLobbyErrorState(error: 'Server Failure')),

@@ -1,3 +1,5 @@
+// Entry point — connects to MongoDB, starts the HTTP server, and opens WebSocket change streams.
+// Both MongoDB change streams are opened once after the DB connects and shared across all WebSocket clients.
 const ws = require('ws');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');

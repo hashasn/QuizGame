@@ -1,3 +1,4 @@
+/// Reads and writes the quiz catalogue to SharedPreferences as a JSON string for offline use.
 import 'dart:convert';
 
 import 'package:footy/features/Quizzes/Data/models/model_quizzes.dart';

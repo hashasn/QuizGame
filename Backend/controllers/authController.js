@@ -1,3 +1,4 @@
+// Authentication controller — JWT sign-up/login, route protection middleware, and password reset flow.
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const { promisify } = require('util');
@@ -86,6 +87,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   next();
 });
 
+// Middleware factory — call restrictTo('admin') to get a middleware that blocks non-admin users.
 exports.restrictTo =
   (...role) =>
   (req, res, next) => {

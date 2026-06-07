@@ -1,3 +1,5 @@
+// Operational error class — marks errors that are expected (bad input, not found, etc.)
+// so the global error handler can distinguish them from unexpected programming errors.
 class AppError extends Error {
   constructor(message, statusCode) {
     super(message);

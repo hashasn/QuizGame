@@ -1,3 +1,4 @@
+/// Fetches the current waiting lobby from the API using the lobby ID stored in SharedPreferences.
 import 'dart:convert';
 
 import 'package:footy/features/multiplayer/data/MOdels/waiting_lobby_users_model.dart';

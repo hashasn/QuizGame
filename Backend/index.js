@@ -1,3 +1,5 @@
+// Express app setup — applies security middleware (helmet, rate limiting, sanitisation) and mounts all routers.
+// Exported without starting a server so it can be imported directly in integration tests.
 const express = require('express');
 const compression = require('compression');
 const rateLimit = require('express-rate-limit');

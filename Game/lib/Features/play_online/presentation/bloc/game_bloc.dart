@@ -1,3 +1,4 @@
+/// BLoC for the online multiplayer game screen — manages quiz progression, scoring, and real-time score sync via WebSocket.
 import 'dart:async';
 import 'dart:convert';
 
@@ -138,7 +139,8 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     }
 
     if (!event.isRight) {
-      if (event.index >= borderColors.length) {  // index outside 0-3 = timer expired
+      // index outside the 4 answer slots means the timer expired rather than a tap
+      if (event.index >= borderColors.length) {
         for (int i = 0; i < borderColors.length; i++) {
           if (i == event.answerIndex) {
             borderColors[i] = Colors.green;

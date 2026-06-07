@@ -1,3 +1,4 @@
+/// Fetches the quiz catalogue from the remote API and deserialises it into [QuizzesModel].
 import 'dart:convert';
 
 import 'package:footy/features/Quizzes/Data/models/model_quizzes.dart';

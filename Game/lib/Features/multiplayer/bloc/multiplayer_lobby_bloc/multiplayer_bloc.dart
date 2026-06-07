@@ -1,3 +1,4 @@
+/// BLoC for the host's multiplayer lobby — manages player list updates via WebSocket change streams and game creation.
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
@@ -173,6 +174,7 @@ class MultiplayerBloc extends Bloc<MultiplayerEvent, MultiplayerState> {
   }
 }
 
+/// Appends a random suffix to a display name to avoid collisions in the lobby.
 int randomNum() {
   var rng = Random();
 

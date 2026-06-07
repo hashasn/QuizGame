@@ -1,3 +1,4 @@
+/// Remote data source for the online game — fetches quiz/score data and sends score updates to the backend.
 import 'dart:convert';
 
 import 'package:footy/core/error/exceptions.dart';
@@ -59,6 +60,7 @@ class FetchGameData {
     }
   }
 
+  /// Fire-and-forget score update — not awaited so it doesn't block UI progression.
   void updateScore(String code, String name, String score, bool isComplete) {
     final client = http.Client();
 

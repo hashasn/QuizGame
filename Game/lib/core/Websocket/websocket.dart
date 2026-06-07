@@ -1,3 +1,4 @@
+/// Wrapper around [WebSocketChannel] for real-time communication with the backend.
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 const _wsBaseUrl = 'wss://quizgame-cr1w.onrender.com/api/v1';

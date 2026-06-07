@@ -1,3 +1,4 @@
+/// Creates a new game document on the backend from the lobby's quiz selection and player list.
 import 'dart:convert';
 
 import 'package:footy/features/multiplayer/data/MOdels/game_model.dart';

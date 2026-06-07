@@ -1,3 +1,4 @@
+// Routes for /api/v1/quizes — read-only for players; create/update/delete are admin operations.
 //const fs = require('fs');
 const express = require('express');
 const quizController = require('../controllers/quizController');

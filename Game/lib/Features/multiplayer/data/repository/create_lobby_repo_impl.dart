@@ -1,4 +1,4 @@
-import 'dart:ffi';
+
 
 import 'package:dartz/dartz.dart';
 import 'package:footy/core/error/exceptions.dart';
@@ -17,7 +17,7 @@ class CreateLobbyRepositoryImpl implements CreateLobbyRepository {
     try {
       remote.addUsers(userName, code);
 
-      return Right(Void);
+      return const Right(null);
     } on ServerException {
       return Left(ServerFailure());
     }

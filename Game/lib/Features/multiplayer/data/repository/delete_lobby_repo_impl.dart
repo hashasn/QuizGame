@@ -1,4 +1,4 @@
-import 'dart:ffi';
+
 
 import 'package:dartz/dartz.dart';
 import 'package:footy/core/error/exceptions.dart';
@@ -15,7 +15,7 @@ class DeleteLobbyRepositoryImpl implements DeleteLobbyRepository {
     try {
       remote.deleteAllUsers(code);
 
-      return Right(Void);
+      return const Right(null);
     } on ServerException {
       return Left(ServerFailure());
     }

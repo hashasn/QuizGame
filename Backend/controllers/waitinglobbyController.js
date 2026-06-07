@@ -1,3 +1,4 @@
+// CRUD controller for the waiting lobby — manages the player list before a game starts.
 const catchAsync = require('../util/catchAsync');
 const AppError = require('../util/appError');
 

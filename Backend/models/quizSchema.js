@@ -1,3 +1,4 @@
+// Quiz catalogue schema — each quiz has a title, an image, and an array of multiple-choice questions.
 const mongoose = require('mongoose');
 
 const quizSchema = new mongoose.Schema({

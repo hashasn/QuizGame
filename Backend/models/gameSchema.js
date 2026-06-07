@@ -1,3 +1,4 @@
+// Game session schema — links a lobby code, a quiz, a time limit, and the list of players with their scores.
 const mongoose = require('mongoose');
 const quiz = require('./quizSchema');
 
@@ -21,6 +22,7 @@ const gameSchema = new mongoose.Schema({
   },
 });
 
+// Auto-populate the quiz document on every find so callers always get full question data.
 gameSchema.pre(/^find/, function (next) {
   this.populate({ path: 'quiz' });
 

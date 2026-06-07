@@ -1,7 +1,9 @@
+// User account management — profile updates and account deletion (auth/auth is handled in authController).
 const catchAsync = require('../util/catchAsync');
 const AppError = require('../util/appError');
 const User = require('../models/userModel');
 
+// Whitelists specific fields from a request body to prevent mass-assignment of sensitive fields like role or password.
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
   Object.keys(obj).forEach((key) => {

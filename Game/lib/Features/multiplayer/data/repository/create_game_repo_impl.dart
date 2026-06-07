@@ -1,4 +1,4 @@
-import 'dart:ffi';
+
 
 import 'package:dartz/dartz.dart';
 import 'package:footy/core/error/exceptions.dart';
@@ -17,7 +17,7 @@ class CreateGameRespositoryImpl implements CreateGameRespository {
       String code, String quizId, List<User> players, int time) async {
     try {
       game.AddGame(code, quizId, players, time);
-      return Right(Void);
+      return const Right(null);
     } on ServerException {
       return Left(ServerFailure());
     }

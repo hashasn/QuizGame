@@ -1,3 +1,4 @@
+// User schema with bcrypt password hashing, JWT-compatible password-change detection, and a reset token flow.
 const crypto = require('crypto');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
@@ -72,6 +73,7 @@ userSchema.methods.correctPassword = async function (
   return await bcrypt.compare(candidatePassword, userPassword);
 };
 
+// Returns true if the password was changed after the JWT was issued — used to invalidate stale tokens.
 userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
   if (this.passwordChangedAt) {
     const changedTimestamp = parseInt(
@@ -86,6 +88,7 @@ userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
   return false;
 };
 
+// Generates a plain reset token to email the user, stores only its SHA-256 hash in the DB.
 userSchema.methods.createPasswordResetToken = function () {
   const resetToken = crypto.randomBytes(32).toString('hex');
 

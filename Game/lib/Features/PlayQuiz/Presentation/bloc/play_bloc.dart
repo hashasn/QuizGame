@@ -1,3 +1,4 @@
+/// BLoC for the single-player offline quiz — handles question progression, answer checking, scoring, and game reset.
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';

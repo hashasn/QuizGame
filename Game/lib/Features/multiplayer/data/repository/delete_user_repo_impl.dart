@@ -1,4 +1,4 @@
-import 'dart:ffi';
+
 
 import 'package:dartz/dartz.dart';
 import 'package:footy/core/error/exceptions.dart';
@@ -15,7 +15,7 @@ class DeleteUserRepositoryImpl implements DeleteUserRepository {
   Future<Either<Failure, void>> deleteUser(String code, String userName) async {
     try {
       remote.deleteUser(code, userName);
-      return Right(Void);
+      return const Right(null);
     } on ServerException {
       return Left(ServerFailure());
     }

@@ -1,3 +1,5 @@
+// Routes for /api/v1/waitinglobby — manages the pre-game lobby player list.
+// Note: the /deleteOneUSer/:id path has a capitalisation typo that must be preserved to match the Flutter client.
 const express = require('express');
 //const quizController = require('../controllers/quizController');
 const lobbyController = require('../controllers/waitinglobbyController');

@@ -1,3 +1,5 @@
+// Global Express error handler — sends full error details in development,
+// sanitised messages in all other environments to avoid leaking internals.
 const AppError = require('../util/appError');
 
 const handleCastErrorDB = (err) => {
@@ -65,7 +67,8 @@ module.exports = (err, req, res, next) => {
 
   if (process.env.NODE_ENV === 'development') {
     sendErrorDev(err, res);
-  } else if (process.env.NODE_ENV === 'production') {
+  } else {
+    // handles production, test, and any other environment
     let error = { ...err };
 
     if (error.name === 'CastError') error = handleCastErrorDB(error);

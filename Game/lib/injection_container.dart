@@ -1,3 +1,5 @@
+/// Dependency injection setup using GetIt — split across four init functions called in sequence from main().
+/// init → Quizzes feature; initTwo → single-player PlayQuiz; initThree → multiplayer lobby; initFour → online game.
 //import '<FILE_NAME>.config.dart';
 import 'package:footy/features/PlayQuiz/Business/repository/selectedQuizrepo.dart';
 import 'package:footy/features/PlayQuiz/Business/usecase/start_quiz.dart';

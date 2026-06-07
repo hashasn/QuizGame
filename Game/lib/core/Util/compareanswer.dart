@@ -1,3 +1,4 @@
+/// Utility for checking whether a selected option matches the correct answer on a [Question].
 import 'package:footy/features/Quizzes/Business/Entities/quizzes.dart';
 
 bool compareAnswer(Question q, String options) {

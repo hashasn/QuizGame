@@ -1,3 +1,4 @@
+/// Manages waiting lobby membership — creates lobbies, adds/removes individual players, and deletes entire lobbies.
 import 'dart:convert';
 import 'dart:math';
 
@@ -23,6 +24,7 @@ class AddUsers {
     );
   }
 
+  /// Returns 'exists' if the lobby was found and the player was added, 'empty' if the game code does not exist.
   Future<String> addNewUser(String code, String userName) async {
     final res = await client.get(
       Uri.parse('$uri/waitinglobby?lobbyCode=$code'),

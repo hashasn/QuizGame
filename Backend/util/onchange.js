@@ -1,3 +1,5 @@
+// Legacy change stream helper — superseded by openChangeStreams() in server.js,
+// which opens both lobby and game streams once at startup rather than per connection.
 const WebSocket = require('ws');
 const waitingLobby = require('../models/waitingLobbySchema');
 const wsServer = require('../server');

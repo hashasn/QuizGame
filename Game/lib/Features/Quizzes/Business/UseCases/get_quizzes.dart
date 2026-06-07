@@ -1,3 +1,4 @@
+/// Use case that fetches the full quiz catalogue from the repository.
 import 'package:dartz/dartz.dart';
 
 import 'package:footy/core/error/failure.dart';

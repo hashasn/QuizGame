@@ -1,3 +1,4 @@
+/// Domain-layer error types returned by repositories via [Either] — never throws, always returns Left(Failure).
 import 'package:equatable/equatable.dart';
 
 abstract class Failure extends Equatable {

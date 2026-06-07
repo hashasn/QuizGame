@@ -1,3 +1,5 @@
+// Sends transactional emails via Mailtrap (dev sandbox) — used for password reset.
+// Swap the transport credentials for a real provider before going to production.
 const nodemailer = require('nodemailer');
 
 const sendEmail = async (options) => {

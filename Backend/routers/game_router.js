@@ -1,3 +1,4 @@
+// Routes for /api/v1/game — all four HTTP verbs on / use the gameCode query param, not a path param.
 const express = require('express');
 const gameController = require('../controllers/gameController');
 

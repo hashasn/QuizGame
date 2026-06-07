@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:footy/Features/multiplayer/Presentation/pages/menu_page.dart';
 import 'package:footy/injection_container.dart' as di;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //configureDependencies();
+
   await di.init();
   await di.initTwo();
   di.initThree();
   di.initFour();
-  // di.initFour();
+
   runApp(const MyApp());
 }
 

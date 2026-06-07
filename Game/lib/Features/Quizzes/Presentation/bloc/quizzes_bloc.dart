@@ -1,3 +1,4 @@
+/// BLoC for the quiz catalogue screen — loads quizzes on startup and handles quiz selection.
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
@@ -30,6 +31,7 @@ class QuizzesBloc extends Bloc<QuizzesEvent, QuizzesState> {
         (right) => emit(SuccessState(qs: right)));
   }
 
+  /// Converts a [Failure] subtype to a user-facing error string.
   String mapFailureToMessage(Failure failure) {
     switch (failure.runtimeType) {
       case ServerFailure:

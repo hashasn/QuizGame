@@ -1,3 +1,4 @@
+// CRUD controller for the game collection — handles game creation, score updates, and cleanup.
 const catchAsync = require('../util/catchAsync');
 const AppError = require('../util/appError');
 const gameModel = require('../models/gameSchema');
@@ -56,7 +57,7 @@ exports.updateScore = catchAsync(async (req, res, next) => {
     }
   }
 
-  game.save();
+  await game.save();
 
   res.status(200).json({
     status: 'success',

@@ -1,3 +1,5 @@
+// CLI script to seed or wipe the quiz collection.
+// Usage: node data/import-dev-data.js --import | --delete
 const fs = require('fs');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');

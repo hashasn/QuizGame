@@ -1,3 +1,4 @@
+// CRUD controller for the quiz catalogue — quizzes are created by admins and read by all players.
 //const fs = require('fs');
 const Quiz = require('../models/quizSchema');
 const catchAsync = require('../util/catchAsync');

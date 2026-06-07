@@ -1,3 +1,4 @@
+/// Abstraction over device connectivity — used by repositories to decide whether to hit the network or cache.
 import 'package:injectable/injectable.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 

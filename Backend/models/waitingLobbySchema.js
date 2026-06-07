@@ -1,3 +1,4 @@
+// Waiting lobby schema — holds a lobby code and the list of player names before the game starts.
 const mongoose = require('mongoose');
 
 const waitingLobbySchema = new mongoose.Schema({
