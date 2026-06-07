@@ -1,7 +1,7 @@
 const express = require('express');
 //const quizController = require('../controllers/quizController');
 const lobbyController = require('../controllers/waitinglobbyController');
-//const authController = require('../controllers/authContoller');
+//const authController = require('../controllers/authController');
 
 const Router = express.Router();
 //Router.param('id', quizController.checkId);

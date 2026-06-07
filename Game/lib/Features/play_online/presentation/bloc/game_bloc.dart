@@ -23,7 +23,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   final OnlinePlayQuiz gameQuiz;
   final GetTime getTime;
   final GetScore getScore;
-  final AddScore addSCore;
+  final AddScore addScore;
   final DeleteGame deleteGame;
   String gameCode = '';
   String userName = '';
@@ -35,7 +35,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   late Either<Failure, int> time;
 
   int count = 0;
-  GameBloc(this.gameQuiz, this.getScore, this.addSCore, this.deleteGame,
+  GameBloc(this.gameQuiz, this.getScore, this.addScore, this.deleteGame,
       this.getTime)
       : super(GameInitial()) {
     socket.connect();
@@ -50,7 +50,9 @@ class GameBloc extends Bloc<GameEvent, GameState> {
             if (coll == 'gameschemas') {
               String type = json.decode(event)['operationType'];
               if (type == 'update') {
-                if (count > 9) {
+                int quizLength = 0;
+                quiz.fold((l) => null, (r) => quizLength = r.questions.length);
+                if (quizLength > 0 && count >= quizLength) {
                   add(GameResultsUpdateEvent());
                 }
               }
@@ -84,7 +86,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         (r) => quizTime = r);
     quiz = await gameQuiz(event.gameCode);
     quiz.fold(
-      (left) => emit(GameErrorState(error: 'Failed to Fetxh Quiz')),
+      (left) => emit(GameErrorState(error: 'Failed to fetch quiz')),
       (right) => emit(GameSuccessState(
           users: users,
           qs: right,
@@ -136,9 +138,9 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     }
 
     if (!event.isRight) {
-      if (event.index > 4) {
+      if (event.index >= borderColors.length) {  // index outside 0-3 = timer expired
         for (int i = 0; i < borderColors.length; i++) {
-          if (i == event.asnwerIndex) {
+          if (i == event.answerIndex) {
             borderColors[i] = Colors.green;
           } else {
             borderColors[i] = Colors.red;
@@ -146,7 +148,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         }
       } else {
         for (int i = 0; i < borderColors.length; i++) {
-          if (i == event.asnwerIndex) {
+          if (i == event.answerIndex) {
             borderColors[i] = Colors.green;
           }
         }
@@ -167,11 +169,13 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     }
 
     String stringScore = score.toString();
-    if (count == 9) {
+    int quizLength = 0;
+    quiz.fold((l) => null, (r) => quizLength = r.questions.length);
+    if (count == quizLength - 1) {
       isComplete = true;
     }
     // print('count is $count, iscomplete is $isComplete');
-    addSCore(gameCode, userName, stringScore, isComplete);
+    addScore(gameCode, userName, stringScore, isComplete);
 
     await Future.delayed(Duration(seconds: 3));
 

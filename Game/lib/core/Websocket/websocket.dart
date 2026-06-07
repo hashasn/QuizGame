@@ -1,12 +1,11 @@
-import 'package:web_socket_channel/status.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
+
+const _wsBaseUrl = 'ws://quizy-232642f57fa5.herokuapp.com/api/v1';
 
 class WebSocket {
   late WebSocketChannel s;
   WebSocketChannel connect() {
-    s = WebSocketChannel.connect(
-      Uri.parse('ws://quizy-232642f57fa5.herokuapp.com/api/v1'),
-    );
+    s = WebSocketChannel.connect(Uri.parse(_wsBaseUrl));
 
     // s.sink.add('Hello');
     return s;

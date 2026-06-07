@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const { promisify } = require('util');
 const sendEmail = require('../util/email');
 const User = require('../models/userModel');
-const AppError = require('../util/appEroor');
+const AppError = require('../util/appError');
 const catchAsync = require('../util/catchAsync');
 
 const signToken = (id) =>
@@ -16,13 +16,11 @@ exports.signUp = catchAsync(async (req, res, next) => {
     email: req.body.email,
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
-    passwordChangedAt: req.body.passwordChangedAt,
-    role: req.body.role,
   });
   const token = signToken(newUser._id);
-  res.status(200).json({
+  res.status(201).json({
     status: 'success',
-    token: token,
+    token,
     data: {
       user: newUser,
     },
@@ -50,22 +48,6 @@ exports.login = catchAsync(async (req, res, next) => {
       user,
     },
   });
-});
-exports.loginIn = catchAsync(async (req, res, next) => {
-  const { email, password } = req.body;
-
-  if (!email || !password) {
-    next(new AppError('Please provide email and password', 400));
-  }
-
-  // 2) Check if user exists && password is correct
-  const user = await User.findOne({ email }).select('+password');
-
-  if (!user || !(await user.correctPassword(password, user.password))) {
-    return next(new AppError('Incorrect email or password', 401));
-  }
-
-  // 3) If everything ok, send token to client
 });
 
 exports.protect = catchAsync(async (req, res, next) => {

@@ -6,10 +6,17 @@ const gameSchema = new mongoose.Schema({
   quiz: {
     type: mongoose.Schema.ObjectId,
     ref: quiz,
-    required: [true, 'Must have a a quiz'],
+    required: [true, 'Must have a quiz'],
   },
+  time: { type: Number, default: 30 },
   users: {
-    type: [{ name: { type: String }, score: { type: String } }],
+    type: [
+      {
+        name: { type: String },
+        score: { type: String },
+        complete: { type: Boolean, default: false },
+      },
+    ],
     required: [true, 'Must have a user'],
   },
 });

@@ -1,7 +1,7 @@
 //const fs = require('fs');
 const Quiz = require('../models/quizSchema');
 const catchAsync = require('../util/catchAsync');
-const AppError = require('../util/appEroor');
+const AppError = require('../util/appError');
 // const quizes = JSON.parse(
 //   fs.readFileSync(`${__dirname}/../data/quiz_data.json`),
 // );

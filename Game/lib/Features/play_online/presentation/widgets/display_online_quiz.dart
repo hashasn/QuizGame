@@ -82,7 +82,7 @@ class _QuestiosnWidgetState extends State<QuestiosnWidget> {
   @override
   Widget build(BuildContext context) {
     timerSet(widget.timerSetting, widget.timerController1);
-    int asnwerIndex = findRightOption(widget.q);
+    int answerIndex = findRightOption(widget.q);
     return Center(
       child: Column(
         children: [
@@ -106,13 +106,13 @@ class _QuestiosnWidgetState extends State<QuestiosnWidget> {
           ),
           const SizedBox(height: 30),
           containerWidget(
-              widget.q.options[0], widget.q.answers, 0, context, asnwerIndex),
+              widget.q.options[0], widget.q.answers, 0, context, answerIndex),
           containerWidget(
-              widget.q.options[1], widget.q.answers, 1, context, asnwerIndex),
+              widget.q.options[1], widget.q.answers, 1, context, answerIndex),
           containerWidget(
-              widget.q.options[2], widget.q.answers, 2, context, asnwerIndex),
+              widget.q.options[2], widget.q.answers, 2, context, answerIndex),
           containerWidget(
-              widget.q.options[3], widget.q.answers, 3, context, asnwerIndex),
+              widget.q.options[3], widget.q.answers, 3, context, answerIndex),
           const SizedBox(height: 30),
           Padding(
             padding: EdgeInsets.all(15),
@@ -122,7 +122,7 @@ class _QuestiosnWidgetState extends State<QuestiosnWidget> {
               backgroundColor: Colors.grey,
               onTimerEnd: () {
                 BlocProvider.of<GameBloc>(context).add(GameAnswerSelected(
-                    isRight: false, index: 10, asnwerIndex: asnwerIndex));
+                    isRight: false, index: 10, answerIndex: answerIndex));
               },
             ),
           )
@@ -132,17 +132,17 @@ class _QuestiosnWidgetState extends State<QuestiosnWidget> {
   }
 
   Widget containerWidget(String option, String answer, int index,
-      BuildContext context, int asnwerIndex) {
+      BuildContext context, int answerIndex) {
     return InkWell(
       onTap: () {
         if (widget.reset) {
           if (option == answer) {
             BlocProvider.of<GameBloc>(context).add(GameAnswerSelected(
-                isRight: true, index: index, asnwerIndex: asnwerIndex));
+                isRight: true, index: index, answerIndex: answerIndex));
           }
           if (option != answer) {
             BlocProvider.of<GameBloc>(context).add(GameAnswerSelected(
-                isRight: false, index: index, asnwerIndex: asnwerIndex));
+                isRight: false, index: index, answerIndex: answerIndex));
           }
         }
       },

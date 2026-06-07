@@ -1,5 +1,5 @@
 const catchAsync = require('../util/catchAsync');
-const AppError = require('../util/appEroor');
+const AppError = require('../util/appError');
 
 const waitingLobby = require('../models/waitingLobbySchema');
 
@@ -40,9 +40,12 @@ exports.create = catchAsync(async (req, res, next) => {
 });
 
 exports.update = catchAsync(async (req, res, next) => {
-  const lobby = await waitingLobby.findByIdAndUpdate(req.params.id);
+  const lobby = await waitingLobby.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
   if (!lobby) {
-    return next(new AppError(`No quiz with that ID`, 404));
+    return next(new AppError(`No lobby with that ID`, 404));
   }
   res.status(200).json({ status: 'success', data: { lobby } });
 });
@@ -86,11 +89,10 @@ exports.deleteOneUser = catchAsync(async (req, res, next) => {
     return next(new AppError(`No quiz with that ID`, 404));
   }
 
-  //console.log(req.body);
-  // console.log(lobby.users);
   const index = lobby.users.indexOf(req.body.users);
-  ///console.log(index);
-
+  if (index === -1) {
+    return next(new AppError(`User not found in lobby`, 404));
+  }
   lobby.users.splice(index, 1);
 
   lobby.save();

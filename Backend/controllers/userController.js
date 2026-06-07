@@ -1,5 +1,5 @@
 const catchAsync = require('../util/catchAsync');
-const AppError = require('../util/appEroor');
+const AppError = require('../util/appError');
 const User = require('../models/userModel');
 
 const filterObj = (obj, ...allowedFields) => {
@@ -35,7 +35,7 @@ exports.updateUserDetails = catchAsync(async (req, res, next) => {
   res.status(200).json({ status: 'success', data: updatesUser });
 });
 
-exports.deleteUserAcxount = catchAsync(async (req, res, next) => {
+exports.deleteUserAccount = catchAsync(async (req, res, next) => {
   await User.findByIdAndUpdate(req.user.id, { active: false });
 
   res.status(204).json({

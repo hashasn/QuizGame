@@ -22,12 +22,12 @@ class GameNextQuestion extends GameEvent {}
 class GameAnswerSelected extends GameEvent {
   final bool isRight;
   final int index;
-  final int asnwerIndex;
+  final int answerIndex;
 
   GameAnswerSelected({
     required this.isRight,
     required this.index,
-    required this.asnwerIndex,
+    required this.answerIndex,
   });
 }
 

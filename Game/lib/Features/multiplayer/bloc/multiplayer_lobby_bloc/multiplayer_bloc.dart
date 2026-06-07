@@ -119,16 +119,19 @@ class MultiplayerBloc extends Bloc<MultiplayerEvent, MultiplayerState> {
 
   FutureOr<void> lobbyChangedEvent(
       LobbychangedEvent event, Emitter<MultiplayerState> emit) async {
-    bool gotQuizzes = false;
     late Quizzes newQuiz;
+    bool fetchedQuizzes = false;
     final quizzes = await getQuizUsecase();
     final newPlayers = await usecase();
 
-    quizzes.fold((l) => gotQuizzes = true, (r) => newQuiz = r);
-    if (!gotQuizzes) {
+    quizzes.fold((l) => null, (r) {
+      newQuiz = r;
+      fetchedQuizzes = true;
+    });
+    if (fetchedQuizzes) {
       newPlayers.fold(
         (left) =>
-            emit(const LobbyErrorState(error: 'Failed to  change state start')),
+            emit(const LobbyErrorState(error: 'Failed to change state start')),
         (right) => emit(LobbyChangedstate(newPlayers: right, quizzes: newQuiz)),
       );
     } else {
@@ -139,14 +142,11 @@ class MultiplayerBloc extends Bloc<MultiplayerEvent, MultiplayerState> {
   FutureOr<void> leaveGameEvent(
       LeaveGameEvent event, Emitter<MultiplayerState> emit) async {
     emit(LobbyLoadingstate(loadingString: 'Leaving game.....'));
-    Future.delayed(Duration(seconds: 1));
+    await Future.delayed(Duration(seconds: 1));
     final value = await deleteLobby(code);
     value.fold(
-        (l) => emit(
-              LobbyErrorState(error: ' Server Faliure'),
-            ),
+        (l) => emit(LobbyErrorState(error: 'Server Failure')),
         (r) => emit(LeaveGameActionState()));
-    emit(LeaveGameActionState());
   }
 
   FutureOr<void> startGameEvent(

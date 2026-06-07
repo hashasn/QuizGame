@@ -1,10 +1,9 @@
 const catchAsync = require('../util/catchAsync');
-const AppError = require('../util/appEroor');
+const AppError = require('../util/appError');
 const gameModel = require('../models/gameSchema');
 
 exports.getAll = catchAsync(async (req, res, next) => {
-  const sort = { score: 1 };
-  const game = await gameModel.find(req.query);
+  const game = await gameModel.find({ gameCode: req.query.gameCode });
 
   const finalGame = game[0];
 
@@ -44,7 +43,7 @@ exports.create = catchAsync(async (req, res, next) => {
 });
 
 exports.updateScore = catchAsync(async (req, res, next) => {
-  const game = await gameModel.findOne(req.query);
+  const game = await gameModel.findOne({ gameCode: req.query.gameCode });
 
   const { name, score } = req.body;
   //console.log(`name is ${name} and score is ${score}`);
@@ -68,7 +67,7 @@ exports.updateScore = catchAsync(async (req, res, next) => {
 });
 
 exports.delete = catchAsync(async (req, res, next) => {
-  await gameModel.findOneAndDelete(req.query);
+  await gameModel.findOneAndDelete({ gameCode: req.query.gameCode });
 
   res.status(204).json({ status: 'success' });
 });
